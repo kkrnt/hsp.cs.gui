@@ -448,6 +448,9 @@ namespace hsp.cs
                         case "stop":
                             hspArrayData[i] = HSP.Stop(commandArguments);
                             break;
+                        case "screen":
+                            hspArrayData[i] = HSPGUI.Screen(commandArguments);
+                            break;
                     }
 
                     //if文の後処理
@@ -534,6 +537,14 @@ namespace hsp.cs
                     typeof (System.Collections.ObjectModel.ObservableCollection<>).Assembly.Location),
                 //System.Core.dll
                 MetadataReference.CreateFromFile(typeof (System.Linq.Enumerable).Assembly.Location),
+                //System.Drawing
+                MetadataReference.CreateFromFile(typeof (System.Drawing.Graphics).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof (System.Drawing.Size).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof (System.Drawing.Color).Assembly.Location),
+                //System.Windows.Forms
+                MetadataReference.CreateFromFile(typeof (System.Windows.Forms.Form).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof (System.Windows.Forms.Application).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof (System.Windows.Forms.Control).Assembly.Location)
             };
 
             var tree = CSharpSyntaxTree.ParseText(code);

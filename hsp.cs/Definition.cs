@@ -85,7 +85,8 @@ namespace hsp.cs
             "dim",
             "ddim",
             "end",
-            "stop"
+            "stop",
+            "screen"
         };
 
         //変数リスト
@@ -109,11 +110,13 @@ namespace hsp.cs
             "xor",
             "dir_cur",
             "ginfo_mx",
-            "ginfo_my"
+            "ginfo_my",
+            "ginfo_sizeX",
+            "ginfo_sizeY"
         };
 
         //using
-        public static string Using = "using System;\n";
+        public static string Using = "using System;\nusing System.Drawing;\nusing System.Windows.Forms;\n";
         //class
         private const string Header = "public class Program\n{\n";
         //Main関数以外の関数の定義
@@ -123,7 +126,7 @@ namespace hsp.cs
         //システム変数宣言
         public static string VariableDefinition = "";
         //footer
-        private const string Footer = "\n}\n}";
+        public static string Footer = "\n}\n}\n";
 
         //if文の末尾に"}"を付けるためのフラグ
         private static List<int> ifFlag = new List<int>();

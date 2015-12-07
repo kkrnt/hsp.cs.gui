@@ -257,6 +257,12 @@ namespace hsp.cs
                         case "ginfo_my":
                             HSP.Ginfo_my(sentence, i);
                             break;
+                        case "ginfo_sizeX":
+                            HSPGUI.Ginfo_sizeX(sentence, i);
+                            break;
+                        case "ginfo_sizeY":
+                            HSPGUI.Ginfo_sizeY(sentence, i);
+                            break;
                     }
                 }
             }
