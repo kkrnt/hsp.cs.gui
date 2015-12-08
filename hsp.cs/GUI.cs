@@ -38,17 +38,93 @@ namespace hsp.cs
 
             //Program.Window.Add();
 
-            Program.Footer += "class Window" + p[0] + "\n{\n" +
-                "public static void screen" + p[0] + "() {\n" +
-                "Form form" + p[0] + " = new Form();\n" +
-                "form" + p[0] + ".Size = new Size(form" + p[0] + ".Width + form" + p[0] + ".PreferredSize.Width, " +
-                "form" + p[0] + ".Height + form" + p[0] + ".PreferredSize.Height);\n" +
-                "form" + p[0] + ".Text = \"hsp.cs\";\n" +
-                "form" + p[0] + ".BackColor = Color.FromArgb(255, 255, 255);\n" +
-                "form" + p[0] + ".MaximizeBox = false;\n" +
-                "Application.Run(form" + p[0] + ");\n}\n}";
+            if (!Program.ClassBody[0].Contains("public void Screen"))
+            {
+                Program.ClassBody[0] += "public void Screen(Form form, int width, int height)\n{\n" +
+                                        "form.Width = width + form.PreferredSize.Width;\n" +
+                                        "form.Height = height + form.PreferredSize.Height;\n" +
+                                        "form.Size = new Size(form.Width, form.Height);\n}\n\n";
+            }
 
-            return "Window" + p[0] +".screen" + p[0] + "();";
+            return "hspWindow.Screen(form" + p[0] + ", " + p[1] + ", " + p[2] + ")";
+        }
+
+        public static string Title(string strings)
+        {
+            if (!Program.ClassBody[0].Contains("public void Screen"))
+            {
+                Program.ClassBody[0] += "public void Title(Form form, string strings)\n{\n" +
+                                        "form.Text = strings;\n}\n";
+
+            }
+            
+            return "hspWindow.Title(CurrentScreenID, " + strings + ")";
+        }
+
+        public static string Circle(string strings)
+        {
+            var p = strings.Split(',');
+
+            for (var i = 0; i < p.Count(); i++)
+            {
+                p[i] = p[i].Trim();
+            }
+
+            if (p.Count() == 4)
+            {
+                Program.ClassBody[1] += "g.FillEllipse(brush, " + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");";
+            }
+            else if (p.Count() == 5)
+            {
+                if (p[4].Equals("0"))
+                {
+                    Program.ClassBody[1] += "g.DrawEllipse(pen, " + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");";
+                }
+                else
+                {
+                    Program.ClassBody[1] += "g.FillEllipse(brush, " + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");";
+                }
+            }
+            else
+            {
+                //
+            }
+
+            return "//Circle(" + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");";
+        }
+
+        public static string Boxf(string strings)
+        {
+            var p = strings.Split(',');
+
+            for (var i = 0; i < p.Count(); i++)
+            {
+                p[i] = p[i].Trim();
+            }
+
+            if (p.Count() == 2)
+            {
+                Program.ClassBody[1] += "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", Width, Height);\n";
+                return "//Boxf(" + p[0] + ", " + p[1] + ", Width, Height);";
+            }
+            else if (p.Count() == 4)
+            {
+                if (p[0].Equals(string.Empty))
+                {
+                    p[0] = "0";
+                }
+                else if (p[1].Equals(string.Empty))
+                {
+                    p[1] = "0";
+                }
+                
+                Program.ClassBody[1] += "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");\n";
+                return "//Boxf(" + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");";
+            }
+            else
+            {
+                return "error";
+            }
         }
 
         public static void Ginfo_sizeX(List<string> sentence, int i)

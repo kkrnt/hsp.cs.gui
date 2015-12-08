@@ -86,7 +86,10 @@ namespace hsp.cs
             "ddim",
             "end",
             "stop",
-            "screen"
+            "screen",
+            "title",
+            "circle",
+            "boxf"
         };
 
         //変数リスト
@@ -122,11 +125,46 @@ namespace hsp.cs
         //Main関数以外の関数の定義
         public static string SubFunction = "";
         //Main関数の定義
-        private const string MainFunction = "public static void Main()\n{\n";
+        private const string MainFunction = "public static void Main()\n{\n" +
+            "HSPWindow hspWindow = new HSPWindow();\n" +
+            "HSPPaintEvent hspPaintEvent = new HSPPaintEvent();\n" +
+            "var form0 = new Form();\n" +
+            "var CurrentScreenID = form0;\n" +
+            "hspWindow.InitScreen(form0, hspPaintEvent);\n";
+        //ウィンドウを動かすためのコードの追加
+        private const string AddMainFunction = "Application.Run(form0);\n";
         //システム変数宣言
         public static string VariableDefinition = "";
         //footer
-        public static string Footer = "\n}\n}\n";
+        public static string Footer = "}\n}\n";
+        //自作クラスの定義
+        public static List<string> ClassHeader = new List<string>()
+        {
+            "class HSPWindow\n{\n",
+
+            "class HSPPaintEvent\n{\n",
+        };
+        public static List<string> ClassBody = new List<string>()
+        {
+            "public void InitScreen(Form form, HSPPaintEvent hspPaintEvent)\n{\n" +
+            "form.Width = 640 + form.PreferredSize.Width;\n" +
+            "form.Height = 480 + form.PreferredSize.Height;\n" +
+            "form.Size = new Size(form.Width, form.Height);\n" +
+            "form.Text = \"hsp.cs\";\n" +
+            "form.BackColor = Color.FromArgb(255, 255, 255);\n" +
+            "form.MaximizeBox = false;\n" +
+            "form.FormBorderStyle = FormBorderStyle.FixedSingle;\n" +
+            "form.Paint += hspPaintEvent.paint;\n}\n\n",
+
+            "public void paint(object sender, PaintEventArgs e)\n{\n" +
+            "Graphics g = e.Graphics;\n" +
+            "Brush brush = new SolidBrush(Color.FromArgb(0, 0, 0));\n" +
+            "Pen pen = new Pen(Color.FromArgb(0, 0, 0));\n"           
+        };
+        public static List<string> ClassFooter = new List<string>()
+        {
+            "\n}\n\n", "}\n}\n\n"
+        };
 
         //if文の末尾に"}"を付けるためのフラグ
         private static List<int> ifFlag = new List<int>();

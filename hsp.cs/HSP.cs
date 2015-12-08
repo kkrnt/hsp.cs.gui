@@ -809,12 +809,12 @@ namespace hsp.cs
 
         public static void Ginfo_mx(List<string> sentence, int i)
         {
-            sentence[i] = "Windows.Forms.Cursor.Position.X";
+            sentence[i] = "Cursor.Position.X";
         }
 
         public static void Ginfo_my(List<string> sentence, int i)
         {
-            sentence[i] = "Windows.Forms.Cursor.Position.Y";
+            sentence[i] = "Cursor.Position.Y";
         }
     }
 }

@@ -451,6 +451,15 @@ namespace hsp.cs
                         case "screen":
                             hspArrayData[i] = HSPGUI.Screen(commandArguments);
                             break;
+                        case "title":
+                            hspArrayData[i] = HSPGUI.Title(commandArguments);
+                            break;
+                        case "circle":
+                            hspArrayData[i] = HSPGUI.Circle(commandArguments);
+                            break;
+                        case "boxf":
+                            hspArrayData[i] = HSPGUI.Boxf(commandArguments);
+                            break;
                     }
 
                     //if文の後処理
@@ -523,7 +532,9 @@ namespace hsp.cs
 
             //C#のコードを完成
             var code = Using + Header + SubFunction + MainFunction + VariableDefinition +
-                       string.Join("\n", hspArrayData) + Footer;
+                       string.Join("\n", hspArrayData) + "\n" + AddMainFunction + Footer +
+                       ClassHeader[0] + ClassBody[0] + ClassFooter[0] +
+                       ClassHeader[1] + ClassBody[1] + ClassFooter[1];
 
             //エラー判定
             var error = true;
@@ -539,12 +550,16 @@ namespace hsp.cs
                 MetadataReference.CreateFromFile(typeof (System.Linq.Enumerable).Assembly.Location),
                 //System.Drawing
                 MetadataReference.CreateFromFile(typeof (System.Drawing.Graphics).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof (System.Drawing.SolidBrush).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof (System.Drawing.Pen).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof (System.Drawing.Size).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof (System.Drawing.Color).Assembly.Location),
                 //System.Windows.Forms
                 MetadataReference.CreateFromFile(typeof (System.Windows.Forms.Form).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof (System.Windows.Forms.Application).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof (System.Windows.Forms.Control).Assembly.Location)
+                MetadataReference.CreateFromFile(typeof (System.Windows.Forms.Control).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof (System.Windows.Forms.PaintEventHandler).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof (System.Windows.Forms.PaintEventArgs).Assembly.Location),
             };
 
             var tree = CSharpSyntaxTree.ParseText(code);
@@ -602,7 +617,8 @@ namespace hsp.cs
 
                 param.ReferencedAssemblies.AddRange(new string[]
                 {
-                    "mscorlib.dll", "System.dll", "System.Core.dll", "Microsoft.CSharp.dll", "System.IO.dll"
+                    "mscorlib.dll", "System.dll", "System.Core.dll", "Microsoft.CSharp.dll", "System.IO.dll", 
+                    "System.Windows.Forms.dll", "System.Drawing.dll"
                 });
                 new CSharpCodeProvider()
                     .CompileAssemblyFromSource(param, code)
