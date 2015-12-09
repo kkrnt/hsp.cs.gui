@@ -448,6 +448,9 @@ namespace hsp.cs
                         case "stop":
                             hspArrayData[i] = HSP.Stop(commandArguments);
                             break;
+                        case "pos":
+                            hspArrayData[i] = HSPGUI.Pos(commandArguments);
+                            break;
                         case "screen":
                             hspArrayData[i] = HSPGUI.Screen(commandArguments);
                             break;
@@ -460,6 +463,13 @@ namespace hsp.cs
                         case "boxf":
                             hspArrayData[i] = HSPGUI.Boxf(commandArguments);
                             break;
+                        case "line":
+                            hspArrayData[i] = HSPGUI.Line(commandArguments);
+                            break;
+                        case "color":
+                            hspArrayData[i] = HSPGUI.Color(commandArguments);
+                            break;
+
                     }
 
                     //if文の後処理
@@ -531,7 +541,7 @@ namespace hsp.cs
             }
 
             //C#のコードを完成
-            var code = Using + Header + SubFunction + MainFunction + VariableDefinition +
+            var code = Using + Header + Field + SubFunction + MainFunction + VariableDefinition +
                        string.Join("\n", hspArrayData) + "\n" + AddMainFunction + Footer +
                        ClassHeader[0] + ClassBody[0] + ClassFooter[0] +
                        ClassHeader[1] + ClassBody[1] + ClassFooter[1];

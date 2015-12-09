@@ -27,6 +27,34 @@ namespace hsp.cs
             }
         }
 
+        public static string Pos(string strings)
+        {
+            var p = strings.Split(',');
+
+            for (var i = 0; i < p.Count(); i++)
+            {
+                p[i] = p[i].Trim();
+            }
+
+            if (strings.Equals(string.Empty))
+            {
+                Program.ClassBody[1] += "Program.CurrentPositionX = Program.CurrentPositionX;\n" +
+                                        "Program.CurrentPositionY = Program.CurrentPositionY;\n";
+                return "//SetCurrentPosition(Program.CurrentPositionX, Program.CurrentPositionY);";
+            }
+            else if (p.Count() == 2)
+            {
+                Program.ClassBody[1] += "Program.CurrentPositionX = " + p[0] + ";\n" +
+                                        "Program.CurrentPositionY = " + p[1] + ";\n";
+                return "//SetCurrentPosition(" + p[0] + ", " + p[1] + ");";
+            }
+            else
+            {
+                return "error";
+            }
+        }
+
+
         public static string Screen(string strings)
         {
             var p = strings.Split(',');
@@ -113,13 +141,74 @@ namespace hsp.cs
                 {
                     p[0] = "0";
                 }
-                else if (p[1].Equals(string.Empty))
+                if (p[1].Equals(string.Empty))
                 {
                     p[1] = "0";
                 }
                 
                 Program.ClassBody[1] += "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");\n";
                 return "//Boxf(" + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");";
+            }
+            else
+            {
+                return "error";
+            }
+        }
+
+        public static string Line(string strings)
+        {
+            var p = strings.Split(',');
+
+            for (var i = 0; i < p.Count(); i++)
+            {
+                p[i] = p[i].Trim();
+            }
+
+            if (p.Count() == 2)
+            {
+                Program.ClassBody[1] += "g.DrawLine(pen, Program.CurrentPositionX, Program.CurrentPositionY, " + p[0] + ", " + p[1] + ");\n" +
+                                        "Program.CurrentPositionX = " + p[0] + ";\nProgram.CurrentPositionY = " + p[1] + ";\n";
+                return "//Line(Program.CurrentPositionX, Program.CurrentPositionY, " + p[0] + ", " + p[1] + ");";
+            }
+            else if (p.Count() == 4)
+            {
+                Program.ClassBody[1] += "g.DrawLine(pen, " + p[2] + ", " + p[3] + ", " + p[0] + ", " + p[1] + ");\n" +
+                                        "Program.CurrentPositionX = " + p[0] + ";\nProgram.CurrentPositionY = " + p[1] + ";\n";
+                return "//Line(" + p[2] + ", " + p[3] + ", " + p[0] + ", " + p[1] + ");";
+            }
+            else
+            {
+                return "error";
+            }
+        }
+
+        public static string Color(string strings)
+        {
+            var p = strings.Split(',');
+
+            for (var i = 0; i < p.Count(); i++)
+            {
+                p[i] = p[i].Trim();
+            }
+
+            if (p.Count() == 3)
+            {
+                if (p[0].Equals(string.Empty))
+                {
+                    p[0] = "0";
+                }
+                if (p[1].Equals(string.Empty))
+                {
+                    p[1] = "0";
+                }
+                if (p[2].Equals(string.Empty))
+                {
+                    p[2] = "0";
+                }
+
+                Program.ClassBody[1] += "brush = new SolidBrush(Color.FromArgb(" + p[0] + ", " + p[1] + ", " + p[2] + "));\n" +
+                                        "pen = new Pen(Color.FromArgb(" + p[0] + ", " + p[1] + ", " + p[2] + "));\n";
+                return "//Color(" + p[0] + ", " + p[1] + ", " + p[2] + ");";
             }
             else
             {

@@ -86,10 +86,13 @@ namespace hsp.cs
             "ddim",
             "end",
             "stop",
+            "pos",
             "screen",
             "title",
             "circle",
-            "boxf"
+            "boxf",
+            "line",
+            "color"
         };
 
         //変数リスト
@@ -122,14 +125,16 @@ namespace hsp.cs
         public static string Using = "using System;\nusing System.Drawing;\nusing System.Windows.Forms;\n";
         //class
         private const string Header = "public class Program\n{\n";
+        private static string Field = "public static Form form0 = new Form();\n" +
+                                      "public static Form CurrentScreenID = form0;\n" +
+                                      "public static int CurrentPositionX = 0;\n" +
+                                      "public static int CurrentPositionY = 0;\n";
         //Main関数以外の関数の定義
         public static string SubFunction = "";
         //Main関数の定義
         private const string MainFunction = "public static void Main()\n{\n" +
             "HSPWindow hspWindow = new HSPWindow();\n" +
             "HSPPaintEvent hspPaintEvent = new HSPPaintEvent();\n" +
-            "var form0 = new Form();\n" +
-            "var CurrentScreenID = form0;\n" +
             "hspWindow.InitScreen(form0, hspPaintEvent);\n";
         //ウィンドウを動かすためのコードの追加
         private const string AddMainFunction = "Application.Run(form0);\n";
