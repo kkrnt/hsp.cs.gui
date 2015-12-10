@@ -125,10 +125,11 @@ namespace hsp.cs
         public static string Using = "using System;\nusing System.Drawing;\nusing System.Windows.Forms;\n";
         //class
         private const string Header = "public class Program\n{\n";
-        private static string Field = "public static Form form0 = new Form();\n" +
-                                      "public static Form CurrentScreenID = form0;\n" +
-                                      "public static int CurrentPositionX = 0;\n" +
-                                      "public static int CurrentPositionY = 0;\n";
+        //field
+        private static string ProgramField = "public static Form form0 = new Form();\n" +
+                                        "public static Form CurrentScreenID = form0;\n" +
+                                        "public static int CurrentPositionX = 0;\n" +
+                                        "public static int CurrentPositionY = 0;\n";
         //Main関数以外の関数の定義
         public static string SubFunction = "";
         //Main関数の定義
@@ -149,6 +150,7 @@ namespace hsp.cs
 
             "class HSPPaintEvent\n{\n",
         };
+
         public static List<string> ClassBody = new List<string>()
         {
             "public void InitScreen(Form form, HSPPaintEvent hspPaintEvent)\n{\n" +
@@ -162,9 +164,12 @@ namespace hsp.cs
             "form.Paint += hspPaintEvent.paint;\n}\n\n",
 
             "public void paint(object sender, PaintEventArgs e)\n{\n" +
+            "var CurrentLine = 0;\n" +
+            "var FontSize = 14;\n"+
             "Graphics g = e.Graphics;\n" +
             "Brush brush = new SolidBrush(Color.FromArgb(0, 0, 0));\n" +
-            "Pen pen = new Pen(Color.FromArgb(0, 0, 0));\n"           
+            "Pen pen = new Pen(Color.FromArgb(0, 0, 0));\n" +
+            "Font font = new Font(\"MS Pゴシック\", FontSize);\n"
         };
         public static List<string> ClassFooter = new List<string>()
         {

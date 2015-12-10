@@ -37,34 +37,33 @@ namespace hsp.cs
         /// <summary>
         /// エスケープした文字列を元に戻す
         /// </summary>
-        /// <param name="hspArrayData"></param>
+        /// <param name="hspArrayString"></param>
         /// <returns></returns>
-        public static List<string> StringUnEscape(List<string> hspArrayData)
+        public static string StringUnEscape(string hspArrayString)
         {
-            for (var i = 0; i < hspArrayData.Count; i++)
+            var hspStringData = hspArrayString;
+            var stringIndexCount = 0;
+            while (true)
             {
-                var stringIndexCount = 0;
-                while (true)
+                var preStringIndex = hspArrayString.IndexOf("＠＋＠", StringComparison.OrdinalIgnoreCase);
+                if (preStringIndex != -1)
                 {
-                    var preStringIndex = hspArrayData[i].IndexOf("＠＋＠", StringComparison.OrdinalIgnoreCase);
-                    if (preStringIndex != -1)
+                    var postStringIndex = hspArrayString.IndexOf("＠ー＠", StringComparison.OrdinalIgnoreCase);
+                    if (postStringIndex != -1)
                     {
-                        var postStringIndex = hspArrayData[i].IndexOf("＠ー＠", StringComparison.OrdinalIgnoreCase);
-                        if (postStringIndex != -1)
-                        {
-                            var o = hspArrayData[i].Substring(preStringIndex, postStringIndex - preStringIndex + 3);
-                            var index = int.Parse(o.Replace("＠＋＠", "").Replace("＠ー＠", ""));
-                            hspArrayData[i] = hspArrayData[i].Replace(o, Program.StringList[index]);
-                            stringIndexCount++;
-                        }
-                    }
-                    else
-                    {
-                        break;
+                        var o = hspArrayString.Substring(preStringIndex, postStringIndex - preStringIndex + 3);
+                        var index = int.Parse(o.Replace("＠＋＠", "").Replace("＠ー＠", ""));
+                        hspArrayString = hspArrayString.Replace(o, Program.StringList[index]);
+                        hspStringData = hspArrayString;
+                        stringIndexCount++;
                     }
                 }
+                else
+                {
+                    break;
+                }
             }
-            return hspArrayData;
+            return hspStringData;
         } 
 
         /// <summary>

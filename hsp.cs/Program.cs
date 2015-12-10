@@ -412,10 +412,12 @@ namespace hsp.cs
                     switch (firstSentence)
                     {
                         case "print":
-                            hspArrayData[i] = HSP.Print(commandArguments);
+                            //hspArrayData[i] = HSP.Print(commandArguments);
+                            hspArrayData[i] = HSPGUI.Print(commandArguments);
                             break;
                         case "mes":
-                            hspArrayData[i] = HSP.Mes(commandArguments);
+                            //hspArrayData[i] = HSP.Mes(commandArguments);
+                            hspArrayData[i] = HSPGUI.Mes(commandArguments);
                             break;
                         case "exist":
                             hspArrayData[i] = HSP.Exist(commandArguments);
@@ -526,7 +528,10 @@ namespace hsp.cs
             }
 
             //文字列をアンエスケープ
-            hspArrayData = Analyzer.StringUnEscape(hspArrayData);
+            for (var i = 0; i < hspArrayData.Count; i++)
+            {
+                hspArrayData[i] = Analyzer.StringUnEscape(hspArrayData[i]);
+            }
 
 
             //各行の末尾にセミコロンを追加
@@ -543,7 +548,7 @@ namespace hsp.cs
             }
 
             //C#のコードを完成
-            var code = Using + Header + Field + SubFunction + MainFunction + VariableDefinition +
+            var code = Using + Header + ProgramField + SubFunction + MainFunction + VariableDefinition +
                        string.Join("\n", hspArrayData) + "\n" + AddMainFunction + Footer +
                        ClassHeader[0] + ClassBody[0] + ClassFooter[0] +
                        ClassHeader[1] + ClassBody[1] + ClassFooter[1];

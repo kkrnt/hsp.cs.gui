@@ -27,6 +27,22 @@ namespace hsp.cs
             }
         }
 
+        public static string Print(string strings)
+        {
+            strings = Analyzer.StringUnEscape(strings);
+            Program.ClassBody[1] += "g.DrawString(" + strings + ", font, brush, 0, CurrentLine * FontSize);\n" +
+                                    "CurrentLine++;\n";
+            return "//Print(" + strings + ");";
+        }
+
+        public static string Mes(string strings)
+        {
+            strings = Analyzer.StringUnEscape(strings);
+            Program.ClassBody[1] += "g.DrawString(" + strings + ", font, brush, 0, CurrentLine * FontSize);\n" +
+                                    "CurrentLine++;\n";
+            return "//Mes(" + strings + ");";
+        }
+
         public static string Pos(string strings)
         {
             var p = strings.Split(',');
@@ -79,7 +95,7 @@ namespace hsp.cs
 
         public static string Title(string strings)
         {
-            if (!Program.ClassBody[0].Contains("public void Screen"))
+            if (!Program.ClassBody[0].Contains("public void Title"))
             {
                 Program.ClassBody[0] += "public void Title(Form form, string strings)\n{\n" +
                                         "form.Text = strings;\n}\n";
@@ -98,19 +114,35 @@ namespace hsp.cs
                 p[i] = p[i].Trim();
             }
 
+            if (int.Parse(p[0]) > int.Parse(p[2]))
+            {
+                var temp = p[0];
+                p[0] = p[2];
+                p[2] = temp;
+            }
+            if (int.Parse(p[1]) > int.Parse(p[3]))
+            {
+                var temp = p[1];
+                p[1] = p[3];
+                p[3] = temp;
+            }
+
             if (p.Count() == 4)
             {
-                Program.ClassBody[1] += "g.FillEllipse(brush, " + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");";
+                Program.ClassBody[1] += 
+                    "g.FillEllipse(brush, " + p[0] + ", " + p[1] + ", " + p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ");\n";
             }
             else if (p.Count() == 5)
             {
                 if (p[4].Equals("0"))
                 {
-                    Program.ClassBody[1] += "g.DrawEllipse(pen, " + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");";
+                    Program.ClassBody[1] +=
+                        "g.DrawEllipse(pen, " + p[0] + ", " + p[1] + ", " + p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ");\n";
                 }
                 else
                 {
-                    Program.ClassBody[1] += "g.FillEllipse(brush, " + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");";
+                    Program.ClassBody[1] +=
+                        "g.FillEllipse(brush, " + p[0] + ", " + p[1] + ", " + p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ");";
                 }
             }
             else
@@ -130,6 +162,19 @@ namespace hsp.cs
                 p[i] = p[i].Trim();
             }
 
+            if (int.Parse(p[0]) > int.Parse(p[2]))
+            {
+                var temp = p[0];
+                p[0] = p[2];
+                p[2] = temp;
+            }
+            if (int.Parse(p[1]) > int.Parse(p[3]))
+            {
+                var temp = p[1];
+                p[1] = p[3];
+                p[3] = temp;
+            }
+
             if (p.Count() == 2)
             {
                 Program.ClassBody[1] += "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", Width, Height);\n";
@@ -145,9 +190,18 @@ namespace hsp.cs
                 {
                     p[1] = "0";
                 }
-                
-                Program.ClassBody[1] += "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");\n";
-                return "//Boxf(" + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");";
+                if (p[2].Equals(string.Empty))
+                {
+                    p[2] = "Width";
+                }
+                if (p[3].Equals(string.Empty))
+                {
+                    p[3] = "Height";
+                }
+
+                Program.ClassBody[1] += 
+                    "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", " + p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ");\n";
+                return "//Boxf(" + p[0] + ", " + p[1] + ", " + p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ");";
             }
             else
             {
