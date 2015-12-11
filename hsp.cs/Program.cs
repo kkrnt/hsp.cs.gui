@@ -551,7 +551,9 @@ namespace hsp.cs
             var code = Using + Header + ProgramField + SubFunction + MainFunction + VariableDefinition +
                        string.Join("\n", hspArrayData) + "\n" + AddMainFunction + Footer +
                        ClassHeader[0] + ClassBody[0] + ClassFooter[0] +
-                       ClassHeader[1] + ClassBody[1] + ClassFooter[1];
+                       ClassHeader[1] + ClassBody[1] + ClassFooter[1] +
+                       ClassHeader[2] + ClassBody[2] + ClassFooter[2] +
+                       ClassHeader[3] + ClassBody[3] + ClassFooter[3];
 
             //エラー判定
             var error = true;

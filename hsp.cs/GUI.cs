@@ -30,16 +30,16 @@ namespace hsp.cs
         public static string Print(string strings)
         {
             strings = Analyzer.StringUnEscape(strings);
-            Program.ClassBody[1] += "g.DrawString(" + strings + ", font, brush, 0, CurrentLine * FontSize);\n" +
-                                    "CurrentLine++;\n";
+            Program.ClassBody[1] += "g.DrawString(" + strings + ", font, brush, CurrentPositionX, CurrentPositionY);\n" +
+                                    "CurrentPositionY += FontSize;\n";
             return "//Print(" + strings + ");";
         }
 
         public static string Mes(string strings)
         {
             strings = Analyzer.StringUnEscape(strings);
-            Program.ClassBody[1] += "g.DrawString(" + strings + ", font, brush, 0, CurrentLine * FontSize);\n" +
-                                    "CurrentLine++;\n";
+            Program.ClassBody[1] += "g.DrawString(" + strings + ", font, brush, CurrentPositionX, CurrentPositionY);\n" +
+                                    "CurrentPositionY += FontSize;\n";
             return "//Mes(" + strings + ");";
         }
 
@@ -54,14 +54,14 @@ namespace hsp.cs
 
             if (strings.Equals(string.Empty))
             {
-                Program.ClassBody[1] += "Program.CurrentPositionX = Program.CurrentPositionX;\n" +
-                                        "Program.CurrentPositionY = Program.CurrentPositionY;\n";
-                return "//SetCurrentPosition(Program.CurrentPositionX, Program.CurrentPositionY);";
+                Program.ClassBody[1] += "CurrentPositionX = CurrentPositionX;\n" +
+                                        "CurrentPositionY = CurrentPositionY;\n";
+                return "//SetCurrentPosition(CurrentPositionX, CurrentPositionY);";
             }
             else if (p.Count() == 2)
             {
-                Program.ClassBody[1] += "Program.CurrentPositionX = " + p[0] + ";\n" +
-                                        "Program.CurrentPositionY = " + p[1] + ";\n";
+                Program.ClassBody[1] += "CurrentPositionX = " + p[0] + ";\n" +
+                                        "CurrentPositionY = " + p[1] + ";\n";
                 return "//SetCurrentPosition(" + p[0] + ", " + p[1] + ");";
             }
             else
@@ -220,14 +220,14 @@ namespace hsp.cs
 
             if (p.Count() == 2)
             {
-                Program.ClassBody[1] += "g.DrawLine(pen, Program.CurrentPositionX, Program.CurrentPositionY, " + p[0] + ", " + p[1] + ");\n" +
-                                        "Program.CurrentPositionX = " + p[0] + ";\nProgram.CurrentPositionY = " + p[1] + ";\n";
-                return "//Line(Program.CurrentPositionX, Program.CurrentPositionY, " + p[0] + ", " + p[1] + ");";
+                Program.ClassBody[1] += "g.DrawLine(pen, CurrentPositionX, CurrentPositionY, " + p[0] + ", " + p[1] + ");\n" +
+                                        "CurrentPositionX = " + p[0] + ";\nCurrentPositionY = " + p[1] + ";\n";
+                return "//Line(CurrentPositionX, CurrentPositionY, " + p[0] + ", " + p[1] + ");";
             }
             else if (p.Count() == 4)
             {
                 Program.ClassBody[1] += "g.DrawLine(pen, " + p[2] + ", " + p[3] + ", " + p[0] + ", " + p[1] + ");\n" +
-                                        "Program.CurrentPositionX = " + p[0] + ";\nProgram.CurrentPositionY = " + p[1] + ";\n";
+                                        "CurrentPositionX = " + p[0] + ";\nCurrentPositionY = " + p[1] + ";\n";
                 return "//Line(" + p[2] + ", " + p[3] + ", " + p[0] + ", " + p[1] + ");";
             }
             else
@@ -272,12 +272,12 @@ namespace hsp.cs
 
         public static void Ginfo_sizeX(List<string> sentence, int i)
         {
-            sentence[i] = "Width";
+            sentence[i] = "Program.CurrentScreenID.Width.ToString()";
         }
 
         public static void Ginfo_sizeY(List<string> sentence, int i)
         {
-            sentence[i] = "Height";
+            sentence[i] = "Program.CurrentScreenID.Height.ToString()";
         }
     }
 }
