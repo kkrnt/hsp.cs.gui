@@ -92,7 +92,8 @@ namespace hsp.cs
             "circle",
             "boxf",
             "line",
-            "color"
+            "color",
+            "getkey"
         };
 
         //変数リスト
@@ -123,42 +124,25 @@ namespace hsp.cs
 
         //using
         public static string Using = "using System;\nusing System.Drawing;\nusing System.Windows.Forms;\n";
-        //class
-        private const string Header = "public class Program\n{\n";
+        //header
+        private const string ProgramHeader = "public class Program\n{\n";
         //field
-        private static string ProgramField = "public static Form form0 = new Form();\n" +
-                                        "public static Form CurrentScreenID = form0;\n";
+        public static string ProgramField = "public static Form form0 = new Form();\n" +
+                                            "public static Form CurrentScreenID = form0;\n";
         //Main関数以外の関数の定義
         public static string SubFunction = "";
         //Main関数の定義
         private const string MainFunction = "public static void Main()\n{\n" +
-            "HSPWindow hspWindow = new HSPWindow();\n" +
-            "HSPPaintEvent hspPaintEvent = new HSPPaintEvent();\n" +
-            "HSPKeyDownEvent hspKeyDownEvent = new HSPKeyDownEvent();\n" +
-            "HSPTickEvent hspTickEvent = new HSPTickEvent();\n" +
-            "hspWindow.InitScreen(form0, hspPaintEvent, hspKeyDownEvent, hspTickEvent);\n";
-        //ウィンドウを動かすためのコードの追加
-        private const string AddMainFunction = "Application.Run(form0);\n";
+                                            "Program program = new Program();\n" +
+                                            "program.InitScreen(form0);\n";
         //システム変数宣言
         public static string VariableDefinition = "";
-        //footer
-        public static string Footer = "}\n}\n";
-        //自作クラスの定義
-        public static List<string> ClassHeader = new List<string>()
+        //ウィンドウを動かすためのコードの追加
+        private const string AddMainFunction = "Application.Run(form0);\n";
+        //Main関数とSub関数以外で必要な関数
+        public static List<string> AddFunction = new List<string>()
         {
-            "class HSPWindow\n{\n",
-
-            "class HSPPaintEvent\n{\n",
-
-            "class HSPKeyDownEvent\n{\n",
-
-            "class HSPTickEvent\n{\n"
-        };
-
-        public static List<string> ClassBody = new List<string>()
-        {
-            "public void InitScreen(Form form, HSPPaintEvent hspPaintEvent, " +
-            "HSPKeyDownEvent hspKeyDownEvent, HSPTickEvent hspTickEvent)\n{\n" +
+            "public void InitScreen(Form form)\n{\n" +
             "form.Width = 640 + form.PreferredSize.Width;\n" +
             "form.Height = 480 + form.PreferredSize.Height;\n" +
             "form.Size = new Size(form.Width, form.Height);\n" +
@@ -166,31 +150,31 @@ namespace hsp.cs
             "form.BackColor = Color.FromArgb(255, 255, 255);\n" +
             "form.MaximizeBox = false;\n" +
             "form.FormBorderStyle = FormBorderStyle.FixedSingle;\n" +
-            "form.Paint += hspPaintEvent.paint;\n" +
-            "form.KeyDown += hspKeyDownEvent.keyDown;\n" +
-            "Timer timer = new Timer();\n"+
-            "timer.Interval = 15;\n" +
-            "timer.Tick += hspTickEvent.tick;\n" +
-            "timer.Start();\n}\n\n",
+            "form.Paint += paint;\n" +
+            "form.KeyDown += keyDown;\n" +
+            "form.MouseDown += mouseDown;\n}\n\n",
 
             "public void paint(object sender, PaintEventArgs e)\n{\n" +
             "var FontSize = 14;\n"+
-            "var CurrentPositionX = 0;\n" +
-            "var CurrentPositionY = 0;\n" +
+            "var CurrentPosX = 0;\n" +
+            "var CurrentPosY = 0;\n" +
             "Graphics g = e.Graphics;\n" +
             "Brush brush = new SolidBrush(Color.FromArgb(0, 0, 0));\n" +
             "Pen pen = new Pen(Color.FromArgb(0, 0, 0));\n" +
             "Font font = new Font(\"MS Pゴシック\", FontSize);\n",
-
+                                           
             "public void keyDown(object sender, KeyEventArgs e)\n{\n",
 
-            "public void tick(object sender, EventArgs e)\n{\n"
+            "public void mouseDown(object sender, MouseEventArgs e)\n{\n",
+
         };
-        
-        public static List<string> ClassFooter = new List<string>()
+        //AddFunctionのfooter
+        public static List<string> AddFunctionFooter = new List<string>()
         {
-            "\n}\n\n", "}\n}\n\n", "}\n}\n\n", "Program.CurrentScreenID.Invalidate();\n}\n}\n\n"
+            "}\n\n", "}\n\n", "}\n\n"
         };
+        //footer
+        public const string ProgramFooter = "\n}\n";
 
         //if文の末尾に"}"を付けるためのフラグ
         private static List<int> ifFlag = new List<int>();
@@ -206,7 +190,7 @@ namespace hsp.cs
         private static bool firstCase = true;
 
         //変数名の先頭として存在してはいけない文字
-        private static List<char> VariableNameRule =
+        public static List<char> VariableNameRule =
             "0123456789!\"#$%&'()-^\\=~|@[`{;:]+*},./<>?".ToCharArray().ToList();
 
         private static List<string> ReturnLabelList = new List<string>(); 

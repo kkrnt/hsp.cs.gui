@@ -237,7 +237,7 @@ namespace hsp.cs
                         case "else":
                             hspArrayData[i] = "}\n else \n{";
                             break;
-                        
+
                         //forの処理
                         case "for":
                             var forConditionalSentence =
@@ -255,12 +255,12 @@ namespace hsp.cs
                                                   forConditionalSentence[0] + " += " + forConditionalSentence[3] + " )\n{";
                             }
                             break;
-                        
+
                         //breakの処理
                         case "_break":
                             hspArrayData[i] = "break";
                             break;
-                        
+
                         //continueの処理
                         case "_continue":
                             hspArrayData[i] = "continue";
@@ -289,7 +289,7 @@ namespace hsp.cs
                             else
                             {
                                 //repeatに渡されている値が数字ではないのでエラー
-                                Console.WriteLine("repeatに渡されている値("+ repeatConditionalSentence + ")は数字ではありません");
+                                Console.WriteLine("repeatに渡されている値(" + repeatConditionalSentence + ")は数字ではありません");
                             }
                             break;
 
@@ -321,7 +321,7 @@ namespace hsp.cs
                                     if (!hspArrayData[switchList[j] - 1].Contains("break;"))
                                     {
                                         var defaultString = "";
-                                        for (var k = switchList[j]+1; k < switchList[switchList.Count - 1]; k++)
+                                        for (var k = switchList[j] + 1; k < switchList[switchList.Count - 1]; k++)
                                         {
                                             defaultString += hspArrayData[k] + "\nbreak;";
                                         }
@@ -392,7 +392,7 @@ namespace hsp.cs
                         case "gosub":
                             hspArrayData[i] = "goto " + hspArrayData[i].Substring("gosub".Length).Replace("*", "");
                             var label = __LocalName("label");
-                            hspArrayData.Insert(i+1, label + ":");
+                            hspArrayData.Insert(i + 1, label + ":");
                             ReturnLabelList.Add(label);
                             break;
                     }
@@ -473,6 +473,9 @@ namespace hsp.cs
                         case "color":
                             hspArrayData[i] = HSPGUI.Color(commandArguments);
                             break;
+                        case "getkey":
+                            hspArrayData[i] = HSPGUI.Getkey(commandArguments);
+                            break;
 
                     }
 
@@ -497,7 +500,7 @@ namespace hsp.cs
                     else
                     {
                         //変数リストに含まれていない場合
-                        if (!VariableList.Contains(firstSentence) && hspArrayData[i][hspArrayData[i].Length-1] != ':')
+                        if (!VariableList.Contains(firstSentence) && hspArrayData[i][hspArrayData[i].Length - 1] != ':')
                         {
                             //変数宣言
                             hspArrayData[i] = "dynamic " + hspArrayData[i];
@@ -548,12 +551,10 @@ namespace hsp.cs
             }
 
             //C#のコードを完成
-            var code = Using + Header + ProgramField + SubFunction + MainFunction + VariableDefinition +
-                       string.Join("\n", hspArrayData) + "\n" + AddMainFunction + Footer +
-                       ClassHeader[0] + ClassBody[0] + ClassFooter[0] +
-                       ClassHeader[1] + ClassBody[1] + ClassFooter[1] +
-                       ClassHeader[2] + ClassBody[2] + ClassFooter[2] +
-                       ClassHeader[3] + ClassBody[3] + ClassFooter[3];
+            var code = Using + ProgramHeader + ProgramField + SubFunction + MainFunction + VariableDefinition +
+                       string.Join("\n", hspArrayData) + "\n" + AddMainFunction + "}\n\n" + AddFunction[0] +
+                       AddFunction[1] + AddFunctionFooter[0] + AddFunction[2] + AddFunctionFooter[1] +
+                       AddFunction[3] + AddFunctionFooter[2] + ProgramFooter;
 
             //エラー判定
             var error = true;
