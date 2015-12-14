@@ -503,7 +503,8 @@ namespace hsp.cs
                         if (!VariableList.Contains(firstSentence) && hspArrayData[i][hspArrayData[i].Length - 1] != ':')
                         {
                             //変数宣言
-                            hspArrayData[i] = "dynamic " + hspArrayData[i];
+                            ProgramField += "public static dynamic " + hspArrayData[i] +";\n";
+                            hspArrayData[i] = "//dynamic " + hspArrayData[i];
                             //変数リストに追加
                             VariableList.Add(firstSentence);
                         }

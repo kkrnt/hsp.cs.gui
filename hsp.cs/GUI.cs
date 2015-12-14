@@ -38,7 +38,7 @@ namespace hsp.cs
         public static string Mes(string strings)
         {
             strings = Analyzer.StringUnEscape(strings);
-            Program.AddFunction[1] += "g.DrawString(" + strings + ", font, brush, CurrentPosX, CurrentPosY);\n" +
+            Program.AddFunction[1] += "g.DrawString(" + strings + ".ToString(), font, brush, CurrentPosX, CurrentPosY);\n" +
                                       "CurrentPosY += FontSize;\n";
             return "//Mes(" + strings + ");";
         }
@@ -642,12 +642,12 @@ namespace hsp.cs
 
         public static void Ginfo_sizeX(List<string> sentence, int i)
         {
-            sentence[i] = "CurrentScreenID.Width.ToString()";
+            sentence[i] = "CurrentScreenID.Width";
         }
 
         public static void Ginfo_sizeY(List<string> sentence, int i)
         {
-            sentence[i] = "CurrentScreenID.Height.ToString()";
+            sentence[i] = "CurrentScreenID.Height";
         }
     }
 }
