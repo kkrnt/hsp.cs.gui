@@ -42,7 +42,6 @@ namespace hsp.cs
         public static string StringUnEscape(string hspArrayString)
         {
             var hspStringData = hspArrayString;
-            var stringIndexCount = 0;
             while (true)
             {
                 var preStringIndex = hspArrayString.IndexOf("＠＋＠", StringComparison.OrdinalIgnoreCase);
@@ -55,7 +54,6 @@ namespace hsp.cs
                         var index = int.Parse(o.Replace("＠＋＠", "").Replace("＠ー＠", ""));
                         hspArrayString = hspArrayString.Replace(o, Program.StringList[index]);
                         hspStringData = hspArrayString;
-                        stringIndexCount++;
                     }
                 }
                 else

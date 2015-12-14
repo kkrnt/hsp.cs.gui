@@ -70,6 +70,17 @@ namespace hsp.cs
             }
         }
 
+        public static string Wait(string strings)
+        {
+            if (!Program.Using.Contains("using System.Threading"))
+            {
+                Program.Using += "using System.Threading;\n";
+            }
+            Program.AddFunction[1] += "Thread.Sleep(" + strings + " * 10);\n" +
+                                      "Application.DoEvents();\n";
+            return "//wait " + strings + " * 10";
+        }
+
 
         public static string Screen(string strings)
         {
@@ -114,18 +125,18 @@ namespace hsp.cs
                 p[i] = p[i].Trim();
             }
 
-            if (int.Parse(p[0]) > int.Parse(p[2]))
+            /*if (int.Parse(p[0].ToString()) > int.Parse(p[2].ToString()))
             {
                 var temp = p[0];
                 p[0] = p[2];
                 p[2] = temp;
             }
-            if (int.Parse(p[1]) > int.Parse(p[3]))
+            if (int.Parse(p[1].ToString()) > int.Parse(p[3].ToString()))
             {
                 var temp = p[1];
                 p[1] = p[3];
                 p[3] = temp;
-            }
+            }*/
 
             if (p.Count() == 4)
             {
@@ -162,26 +173,37 @@ namespace hsp.cs
                 p[i] = p[i].Trim();
             }
 
-            if (int.Parse(p[0]) > int.Parse(p[2]))
+            if (p.Count() == 1)
             {
-                var temp = p[0];
-                p[0] = p[2];
-                p[2] = temp;
+                Program.AddFunction[1] += "g.FillRectangle(brush, 0, 0, " +
+                                          "CurrentScreenID.Width - CurrentScreenID.PreferredSize.Width, " +
+                                          "CurrentScreenID.Height - CurrentScreenID.PreferredSize.Height);\n";
+                return "//Boxf(0, 0, CurrentScreenID.Width - CurrentScreenID.PreferredSize.Width, " +
+                       "CurrentScreenID.Height - CurrentScreenID.PreferredSize.Height);";
             }
-            if (int.Parse(p[1]) > int.Parse(p[3]))
+            else if (p.Count() == 2)
             {
-                var temp = p[1];
-                p[1] = p[3];
-                p[3] = temp;
-            }
-
-            if (p.Count() == 2)
-            {
-                Program.AddFunction[1] += "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", Width, Height);\n";
-                return "//Boxf(" + p[0] + ", " + p[1] + ", Width, Height);";
+                Program.AddFunction[1] += "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", " +
+                                          "CurrentScreenID.Width - CurrentScreenID.PreferredSize.Width, " +
+                                          "CurrentScreenID.Height - CurrentScreenID.PreferredSize.Height);\n";
+                return "//Boxf(" + p[0] + ", " + p[1] + ", CurrentScreenID.Width - CurrentScreenID.PreferredSize.Width, " +
+                       "CurrentScreenID.Height - CurrentScreenID.PreferredSize.Height);";
             }
             else if (p.Count() == 4)
             {
+                /*if (int.Parse(p[0].ToString()) > int.Parse(p[2].ToString()))
+                {
+                    var temp = p[0];
+                    p[0] = p[2];
+                    p[2] = temp;
+                }
+                if (int.Parse(p[1].ToString()) > int.Parse(p[3].ToString()))
+                {
+                    var temp = p[1];
+                    p[1] = p[3];
+                    p[3] = temp;
+                }左上と右下じゃなくても動かすための*/
+
                 if (p[0].Equals(string.Empty))
                 {
                     p[0] = "0";
@@ -192,11 +214,11 @@ namespace hsp.cs
                 }
                 if (p[2].Equals(string.Empty))
                 {
-                    p[2] = "Width";
+                    p[2] = "CurrentScreenID.Width - CurrentScreenID.PreferredSize.Width";
                 }
                 if (p[3].Equals(string.Empty))
                 {
-                    p[3] = "Height";
+                    p[3] = "CurrentScreenID.Height - CurrentScreenID.PreferredSize.Height";
                 }
 
                 Program.AddFunction[1] += "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", " + 

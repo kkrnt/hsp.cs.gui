@@ -86,6 +86,7 @@ namespace hsp.cs
             "ddim",
             "end",
             "stop",
+            "wait",
             "pos",
             "screen",
             "title",
@@ -123,12 +124,13 @@ namespace hsp.cs
         };
 
         //using
-        public static string Using = "using System;\nusing System.Drawing;\nusing System.Windows.Forms;\n";
+        public static string Using = "using System;\nusing System.Drawing;\nusing System.Windows.Forms;\nusing System.Threading;\n";
         //header
         private const string ProgramHeader = "public class Program\n{\n";
         //field
         public static string ProgramField = "public static Form form0 = new Form();\n" +
-                                            "public static Form CurrentScreenID = form0;\n";
+                                            "public static Form CurrentScreenID = form0;\n" +
+                                            "Graphics g;\nPen pen;\nBrush brush;\nFont font;\n";
         //Main関数以外の関数の定義
         public static string SubFunction = "";
         //Main関数の定義
@@ -152,16 +154,21 @@ namespace hsp.cs
             "form.FormBorderStyle = FormBorderStyle.FixedSingle;\n" +
             "form.Paint += paint;\n" +
             "form.KeyDown += keyDown;\n" +
-            "form.MouseDown += mouseDown;\n}\n\n",
+            "form.MouseDown += mouseDown;\n" +
+            "form.FormClosed += formClosed;\n}\n\n",
 
             "public void paint(object sender, PaintEventArgs e)\n{\n" +
             "var FontSize = 14;\n"+
             "var CurrentPosX = 0;\n" +
             "var CurrentPosY = 0;\n" +
-            "Graphics g = e.Graphics;\n" +
-            "Brush brush = new SolidBrush(Color.FromArgb(0, 0, 0));\n" +
-            "Pen pen = new Pen(Color.FromArgb(0, 0, 0));\n" +
-            "Font font = new Font(\"MS Pゴシック\", FontSize);\n",
+            "g = e.Graphics;\n" +
+            "brush = new SolidBrush(Color.FromArgb(0, 0, 0));\n" +
+            "pen = new Pen(Color.FromArgb(0, 0, 0));\n" +
+            "font = new Font(\"MS Pゴシック\", FontSize);\n",
+
+            "public void formClosed(object sender, FormClosedEventArgs e)\n{\n" +
+            "form0.Dispose();\ng.Dispose();\npen.Dispose();\nbrush.Dispose();\nfont.Dispose();\n}\n\n"
+            ,
                                            
             "public void keyDown(object sender, KeyEventArgs e)\n{\n",
 

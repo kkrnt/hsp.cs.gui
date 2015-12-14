@@ -148,8 +148,9 @@ namespace hsp.cs
                 if (hspArrayData[i][0] == '*')
                 {
                     hspArrayData[i] = hspArrayData[i].Substring(1);
-                    hspArrayData[i] = hspArrayData[i].Trim();
-
+                    AddFunction[1] += "try\n{\n" + hspArrayData[i].Trim();
+                    AddFunction[1] += ":\n"; 
+                    hspArrayData[i] = "//" + hspArrayData[i].Trim();
                     hspArrayData[i] += ":";
                 }
 
@@ -386,7 +387,8 @@ namespace hsp.cs
 
                         //gotoの処理
                         case "goto":
-                            hspArrayData[i] = hspArrayData[i].Replace("*", "");
+                            AddFunction[1] += hspArrayData[i].Replace("*", "") + ";\n}\ncatch(Exception)\n{\n}\n";
+                            hspArrayData[i] = "//" + hspArrayData[i].Replace("*", "");
                             break;
 
                         case "gosub":
@@ -452,6 +454,9 @@ namespace hsp.cs
                         case "stop":
                             hspArrayData[i] = HSP.Stop(commandArguments);
                             break;
+                        case "wait":
+                            hspArrayData[i] = HSPGUI.Wait(commandArguments);
+                            break;
                         case "pos":
                             hspArrayData[i] = HSPGUI.Pos(commandArguments);
                             break;
@@ -503,10 +508,15 @@ namespace hsp.cs
                         if (!VariableList.Contains(firstSentence) && hspArrayData[i][hspArrayData[i].Length - 1] != ':')
                         {
                             //変数宣言
-                            ProgramField += "public static dynamic " + hspArrayData[i] +";\n";
+                            ProgramField += "public static dynamic " + hspArrayData[i] + ";\n";
                             hspArrayData[i] = "//dynamic " + hspArrayData[i];
                             //変数リストに追加
                             VariableList.Add(firstSentence);
+                        }
+                        else
+                        {
+                            AddFunction[1] += hspArrayData[i] + ";\n";
+                            hspArrayData[i] = "//" + hspArrayData[i];
                         }
                     }
                 }
@@ -554,8 +564,8 @@ namespace hsp.cs
             //C#のコードを完成
             var code = Using + ProgramHeader + ProgramField + SubFunction + MainFunction + VariableDefinition +
                        string.Join("\n", hspArrayData) + "\n" + AddMainFunction + "}\n\n" + AddFunction[0] +
-                       AddFunction[1] + AddFunctionFooter[0] + AddFunction[2] + AddFunctionFooter[1] +
-                       AddFunction[3] + AddFunctionFooter[2] + ProgramFooter;
+                       AddFunction[1] + AddFunctionFooter[0] + AddFunction[2] + AddFunction[3] + AddFunctionFooter[1] +
+                       AddFunction[4] + AddFunctionFooter[2] + ProgramFooter;
 
             //エラー判定
             var error = true;
