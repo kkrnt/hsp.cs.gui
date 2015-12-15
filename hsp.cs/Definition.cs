@@ -116,11 +116,32 @@ namespace hsp.cs
             "not",
             "or",
             "xor",
+            "mousex",
+            "mousey",
             "dir_cur",
+            "dir_desktop",
+            "dir_exe",
+            "dir_mydoc",
+            "dir_sys",
+            "dir_win",
             "ginfo_mx",
             "ginfo_my",
             "ginfo_sizeX",
-            "ginfo_sizeY"
+            "ginfo_sizeY",
+            "ginfo_r",
+            "ginfo_g",
+            "ginfo_b",
+            "ginfo_cx",
+            "ginfo_cy",
+            "ginfo_dispx",
+            "ginfo_dispy",
+            "ginfo_wx1",
+            "ginfo_wx2",
+            "ginfo_wy1",
+            "ginfo_wy2",
+            "hwnd",
+            "__date__",
+            "__time__"
         };
 
         //using
@@ -136,7 +157,7 @@ namespace hsp.cs
         //Main関数の定義
         private const string MainFunction = "public static void Main()\n{\n" +
                                             "Program program = new Program();\n" +
-                                            "program.InitScreen(form0);\n";
+                                            "program.initScreen(form0);\n";
         //システム変数宣言
         public static string VariableDefinition = "";
         //ウィンドウを動かすためのコードの追加
@@ -144,10 +165,8 @@ namespace hsp.cs
         //Main関数とSub関数以外で必要な関数
         public static List<string> AddFunction = new List<string>()
         {
-            "public void InitScreen(Form form)\n{\n" +
-            "form.Width = 640 + form.PreferredSize.Width;\n" +
-            "form.Height = 480 + form.PreferredSize.Height;\n" +
-            "form.Size = new Size(form.Width, form.Height);\n" +
+            "public void initScreen(Form form)\n{\n" +
+            "form.ClientSize = new Size(640, 480);\n" +
             "form.Text = \"hsp.cs\";\n" +
             "form.BackColor = Color.FromArgb(255, 255, 255);\n" +
             "form.MaximizeBox = false;\n" +

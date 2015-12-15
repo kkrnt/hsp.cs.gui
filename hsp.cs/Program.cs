@@ -414,12 +414,9 @@ namespace hsp.cs
                     switch (firstSentence)
                     {
                         case "print":
+                        case "mes":
                             //hspArrayData[i] = HSP.Print(commandArguments);
                             hspArrayData[i] = HSPGUI.Print(commandArguments);
-                            break;
-                        case "mes":
-                            //hspArrayData[i] = HSP.Mes(commandArguments);
-                            hspArrayData[i] = HSPGUI.Mes(commandArguments);
                             break;
                         case "exist":
                             hspArrayData[i] = HSP.Exist(commandArguments);

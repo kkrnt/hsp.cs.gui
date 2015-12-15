@@ -35,14 +35,6 @@ namespace hsp.cs
             return "//Print(" + strings + ");";
         }
 
-        public static string Mes(string strings)
-        {
-            strings = Analyzer.StringUnEscape(strings);
-            Program.AddFunction[1] += "g.DrawString(" + strings + ".ToString(), font, brush, CurrentPosX, CurrentPosY);\n" +
-                                      "CurrentPosY += FontSize;\n";
-            return "//Mes(" + strings + ");";
-        }
-
         public static string Pos(string strings)
         {
             var p = strings.Split(',');
@@ -93,15 +85,13 @@ namespace hsp.cs
 
             //Program.Window.Add();
 
-            if (!Program.AddFunction[0].Contains("public void Screen"))
+            if (!Program.AddFunction[0].Contains("public void screen"))
             {
-                Program.AddFunction[0] += "public void Screen(Form form, int width, int height)\n{\n" +
-                                          "form.Width = width + form.PreferredSize.Width;\n" +
-                                          "form.Height = height + form.PreferredSize.Height;\n" +
-                                          "form.Size = new Size(form.Width, form.Height);\n}\n\n";
+                Program.AddFunction[0] += "public void screen(Form form, int width, int height)\n{\n" +
+                                          "form.ClientSize = new Size(width, height);\n}\n\n";
             }
 
-            return "program.Screen(form" + p[0] + ", " + p[1] + ", " + p[2] + ")";
+            return "program.screen(form" + p[0] + ", " + p[1] + ", " + p[2] + ")";
         }
 
         public static string Title(string strings)
@@ -176,18 +166,14 @@ namespace hsp.cs
             if (p.Count() == 1)
             {
                 Program.AddFunction[1] += "g.FillRectangle(brush, 0, 0, " +
-                                          "CurrentScreenID.Width - CurrentScreenID.PreferredSize.Width, " +
-                                          "CurrentScreenID.Height - CurrentScreenID.PreferredSize.Height);\n";
-                return "//Boxf(0, 0, CurrentScreenID.Width - CurrentScreenID.PreferredSize.Width, " +
-                       "CurrentScreenID.Height - CurrentScreenID.PreferredSize.Height);";
+                                          "CurrentScreenID.Width, " + "CurrentScreenID.Height);\n";
+                return "//Boxf(0, 0, CurrentScreenID.Width, " + "CurrentScreenID.Height);";
             }
             else if (p.Count() == 2)
             {
                 Program.AddFunction[1] += "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", " +
-                                          "CurrentScreenID.Width - CurrentScreenID.PreferredSize.Width, " +
-                                          "CurrentScreenID.Height - CurrentScreenID.PreferredSize.Height);\n";
-                return "//Boxf(" + p[0] + ", " + p[1] + ", CurrentScreenID.Width - CurrentScreenID.PreferredSize.Width, " +
-                       "CurrentScreenID.Height - CurrentScreenID.PreferredSize.Height);";
+                                          "CurrentScreenID.Width, " + "CurrentScreenID.Height);\n";
+                return "//Boxf(" + p[0] + ", " + p[1] + ", CurrentScreenID.Width, " + "CurrentScreenID.Height);";
             }
             else if (p.Count() == 4)
             {
@@ -214,11 +200,11 @@ namespace hsp.cs
                 }
                 if (p[2].Equals(string.Empty))
                 {
-                    p[2] = "CurrentScreenID.Width - CurrentScreenID.PreferredSize.Width";
+                    p[2] = "CurrentScreenID.Width";
                 }
                 if (p[3].Equals(string.Empty))
                 {
-                    p[3] = "CurrentScreenID.Height - CurrentScreenID.PreferredSize.Height";
+                    p[3] = "CurrentScreenID.Height";
                 }
 
                 Program.AddFunction[1] += "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", " + 
@@ -662,6 +648,16 @@ namespace hsp.cs
             }
         }
 
+        public static void Mousex(List<string> sentence, int i)
+        {
+            sentence[i] = "CurrentScreenID.PointToClient(Cursor.Position).X";
+        }
+
+        public static void Mousey(List<string> sentence, int i)
+        {
+            sentence[i] = "CurrentScreenID.PointToClient(Cursor.Position).Y";
+        }
+
         public static void Ginfo_sizeX(List<string> sentence, int i)
         {
             sentence[i] = "CurrentScreenID.Width";
@@ -670,6 +666,77 @@ namespace hsp.cs
         public static void Ginfo_sizeY(List<string> sentence, int i)
         {
             sentence[i] = "CurrentScreenID.Height";
+        }
+
+        public static void Ginfo_r(List<string> sentence, int i)
+        {
+            sentence[i] = "pen.Color.R";
+        }
+
+        public static void Ginfo_g(List<string> sentence, int i)
+        {
+            sentence[i] = "pen.Color.G";
+        }
+
+        public static void Ginfo_b(List<string> sentence, int i)
+        {
+            sentence[i] = "pen.Color.B";
+        }
+
+        public static void Ginfo_cx(List<string> sentence, int i)
+        {
+            sentence[i] = "CurrentPosX";
+        }
+
+        public static void Ginfo_cy(List<string> sentence, int i)
+        {
+            sentence[i] = "CurrentPosY";
+        }
+
+        public static void Ginfo_dispx(List<string> sentence, int i)
+        {
+            sentence[i] = "Screen.PrimaryScreen.Bounds.Width";
+        }
+
+        public static void Ginfo_dispy(List<string> sentence, int i)
+        {
+            sentence[i] = "Screen.PrimaryScreen.Bounds.Height";
+        }
+
+        public static void Ginfo_wx1(List<string> sentence, int i)
+        {
+            sentence[i] = "CurrentScreenID.Left";
+        }
+
+        public static void Ginfo_wx2(List<string> sentence, int i)
+        {
+            sentence[i] = "CurrentScreenID.Right";
+        }
+
+        public static void Ginfo_wy1(List<string> sentence, int i)
+        {
+            sentence[i] = "CurrentScreenID.Top";
+        }
+
+        public static void Ginfo_wy2(List<string> sentence, int i)
+        {
+            sentence[i] = "CurrentScreenID.Bottom";
+        }
+
+        public static void Hwnd(List<string> sentence, int i)
+        {
+            sentence[i] = "CurrentScreenID.Handle";
+        }
+
+
+        public static void __date__(List<string> sentence, int i)
+        {
+            sentence[i] = "DateTime.Now.ToString(\"d\")";
+        }
+
+        public static void __time__(List<string> sentence, int i)
+        {
+            sentence[i] = "DateTime.Now.ToString(\"T\")";
         }
     }
 }

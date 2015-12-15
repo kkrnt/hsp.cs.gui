@@ -37,16 +37,6 @@ namespace hsp.cs
         }
 
         /// <summary>
-        /// メッセージ表示
-        /// </summary>
-        /// <param name="strings"></param>
-        /// <returns></returns>
-        public static string Mes(string strings)
-        {
-            return "Console.WriteLine(" + strings + ");";
-        }
-
-        /// <summary>
         /// ファイルが存在するか
         /// </summary>
         /// <param name="filename"></param>
@@ -800,11 +790,32 @@ namespace hsp.cs
 
         public static void Dir_cur(List<string> sentence, int i)
         {
-            if (!Program.Using.Contains("using System.IO;"))
-            {
-                Program.Using += "using System.IO;\n";
-            }
-            sentence[i] = "Directory.GetCurrentDirectory()";
+            sentence[i] = "Environment.CurrentDirectory";
+        }
+
+        public static void Dir_desktop(List<string> sentence, int i)
+        {
+            sentence[i] = "Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)";
+        }
+
+        public static void Dir_exe(List<string> sentence, int i)
+        {
+            sentence[i] = "Application.ExecutablePath";
+        }
+
+        public static void Dir_mydoc(List<string> sentence, int i)
+        {
+            sentence[i] = "Environment.GetFolderPath(Environment.SpecialFolder.Personal)";
+        }
+
+        public static void Dir_sys(List<string> sentence, int i)
+        {
+            sentence[i] = "Environment.GetFolderPath(Environment.SpecialFolder.System)";
+        }
+
+        public static void Dir_win(List<string> sentence, int i)
+        {
+            sentence[i] = "Environment.GetFolderPath(Environment.SpecialFolder.Windows)";
         }
 
         public static void Ginfo_mx(List<string> sentence, int i)

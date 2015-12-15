@@ -245,8 +245,29 @@ namespace hsp.cs
                         case "xor":
                             HSP.Xor(sentence, i);
                             break;
+                        case "mousex":
+                            HSPGUI.Mousex(sentence, i);
+                            break;
+                        case "mousey":
+                            HSPGUI.Mousey(sentence, i);
+                            break;
                         case "dir_cur":
                             HSP.Dir_cur(sentence, i);
+                            break;
+                        case "dir_desktop":
+                            HSP.Dir_desktop(sentence, i);
+                            break;
+                        case "dir_exe":
+                            HSP.Dir_exe(sentence, i);
+                            break;
+                        case "dir_mydoc":
+                            HSP.Dir_mydoc(sentence, i);
+                            break;
+                        case "dir_sys":
+                            HSP.Dir_sys(sentence, i);
+                            break;
+                        case "dir_win":
+                            HSP.Dir_win(sentence, i);
                             break;
                         case "ginfo_mx":
                             HSP.Ginfo_mx(sentence, i);
@@ -259,6 +280,48 @@ namespace hsp.cs
                             break;
                         case "ginfo_sizeY":
                             HSPGUI.Ginfo_sizeY(sentence, i);
+                            break;
+                        case "ginfo_r":
+                            HSPGUI.Ginfo_r(sentence, i);
+                            break;
+                        case "ginfo_g":
+                            HSPGUI.Ginfo_g(sentence, i);
+                            break;
+                        case "ginfo_b":
+                            HSPGUI.Ginfo_b(sentence, i);
+                            break;
+                        case "ginfo_cx":
+                            HSPGUI.Ginfo_cx(sentence, i);
+                            break;
+                        case "ginfo_cy":
+                            HSPGUI.Ginfo_cy(sentence, i);
+                            break;
+                        case "ginfo_dispx":
+                            HSPGUI.Ginfo_dispx(sentence, i);
+                            break;
+                        case "ginfo_dispy":
+                            HSPGUI.Ginfo_dispy(sentence, i);
+                            break;
+                        case "ginfo_wx1":
+                            HSPGUI.Ginfo_wx1(sentence, i);
+                            break;
+                        case "ginfo_wx2":
+                            HSPGUI.Ginfo_wx2(sentence, i);
+                            break;
+                        case "ginfo_wy1":
+                            HSPGUI.Ginfo_wy1(sentence, i);
+                            break;
+                        case "ginfo_wy2":
+                            HSPGUI.Ginfo_wy2(sentence, i);
+                            break;
+                        case "hwnd":
+                            HSPGUI.Hwnd(sentence, i);
+                            break;
+                        case "__date__":
+                            HSPGUI.__date__(sentence, i);
+                            break;
+                        case "__time__":
+                            HSPGUI.__time__(sentence, i);
                             break;
                     }
                 }
