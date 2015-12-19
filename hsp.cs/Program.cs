@@ -478,6 +478,9 @@ namespace hsp.cs
                         case "getkey":
                             hspArrayData[i] = HSPGUI.Getkey(commandArguments);
                             break;
+                        case "objsize":
+                            hspArrayData[i] = HSPGUI.Objsize(commandArguments);
+                            break;
 
                     }
 

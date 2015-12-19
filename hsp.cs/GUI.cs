@@ -64,10 +64,8 @@ namespace hsp.cs
 
         public static string Wait(string strings)
         {
-            if (!Program.Using.Contains("using System.Threading"))
-            {
-                Program.Using += "using System.Threading;\n";
-            }
+            Program.UsingCheck("using System.Threading");
+
             Program.AddFunction[1] += "Thread.Sleep(" + strings + " * 10);\n" +
                                       "Application.DoEvents();\n";
             return "//wait " + strings + " * 10";
@@ -646,6 +644,21 @@ namespace hsp.cs
             {
                 return "error";
             }
+        }
+
+        public static string Objsize(string strings)
+        {
+            var p = strings.Split(',');
+
+            for (var i = 0; i < p.Count(); i++)
+            {
+                p[i] = p[i].Trim();
+            }
+
+            Program.ProgramField += "objsizeX = " + p[0] + ";\n" +
+                                    "objsizeY = " + p[1] + ";\n" +
+                                    "objSpace = " + p[2] + ";\n";
+            return "boxSize(" + p[0] + ", " + p[1] + ")";
         }
 
         public static void Mousex(List<string> sentence, int i)

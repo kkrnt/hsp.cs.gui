@@ -43,10 +43,8 @@ namespace hsp.cs
         /// <returns></returns>
         public static string Exist(string filename)
         {
-            if (!Program.Using.Contains("using System.IO;"))
-            {
-                Program.Using += "using System.IO;\n";
-            }
+            Program.UsingCheck("using System.IO;");
+            
             //if (Program.hspStringData.Contains("dynamic strsize = 0;"))
             //{
             // Program.hspStringData += "dynamic strsize = 0;";
@@ -64,12 +62,9 @@ namespace hsp.cs
         /// <returns></returns>
         public static string Delete(string filename)
         {
-            filename = filename.Replace("\"", "");
-            if (!Program.Using.Contains("using System.IO;"))
-            {
-                Program.Using += "using System.IO;\n";
-            }
+            Program.UsingCheck("using System.IO;");
 
+            filename = filename.Replace("\"", "");
             if (!File.Exists(filename))
             {
                 Console.WriteLine("エラー12(「ファイルが見つからないか無効な名前です」)");
@@ -84,16 +79,13 @@ namespace hsp.cs
         /// <returns></returns>
         public static string Bcopy(string strings)
         {
+            Program.UsingCheck("using System.IO;");
+
             var p = strings.Split(',');
 
             for (var i = 0; i < p.Count(); i++)
             {
                 p[i] = p[i].Trim();
-            }
-
-            if (!Program.Using.Contains("using System.IO;"))
-            {
-                Program.Using += "using System.IO;\n";
             }
 
             return "File.Copy(" + p[0] + "," + p[1] + ");";
@@ -106,10 +98,8 @@ namespace hsp.cs
         /// <returns></returns>
         public static string Mkdir(string dirname)
         {
-            if (!Program.Using.Contains("using System.IO;"))
-            {
-                Program.Using += "using System.IO;\n";
-            }
+            Program.UsingCheck("using System.IO;");
+
             return "Directory.CreateDirectory(" + dirname + ");";
         }
 
@@ -155,10 +145,7 @@ namespace hsp.cs
         /// <returns></returns>
         public static string Strrep(string strings)
         {
-            if (!Program.Using.Contains("using System.Text.RegularExpressions;"))
-            {
-                Program.Using += "using System.Text.RegularExpressions;\n";
-            }
+            Program.UsingCheck("using System.Text.RegularExpressions;");
 
             var p = strings.Split(',');
 

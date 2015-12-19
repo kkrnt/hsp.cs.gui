@@ -94,7 +94,8 @@ namespace hsp.cs
             "boxf",
             "line",
             "color",
-            "getkey"
+            "getkey",
+            "objsize"
         };
 
         //変数リスト
@@ -232,6 +233,14 @@ namespace hsp.cs
         public static string __LocalName(string variableName)
         {
             return variableName + "_" + Guid.NewGuid().ToString("N");
+        }
+
+        public static void UsingCheck(string usingName)
+        {
+            if (!Program.Using.Contains(usingName))
+            {
+                Program.Using += usingName + ";\n";
+            }
         }
     }
 }
