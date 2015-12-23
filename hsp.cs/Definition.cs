@@ -95,7 +95,8 @@ namespace hsp.cs
             "line",
             "color",
             "getkey",
-            "objsize"
+            "objsize",
+            "dialog"
         };
 
         //変数リスト

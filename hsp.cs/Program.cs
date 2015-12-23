@@ -481,6 +481,9 @@ namespace hsp.cs
                         case "objsize":
                             hspArrayData[i] = HSPGUI.Objsize(commandArguments);
                             break;
+                        case "dialog":
+                            hspArrayData[i] = HSPGUI.Dialog(commandArguments);
+                            break;
 
                     }
 

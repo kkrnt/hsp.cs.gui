@@ -658,7 +658,47 @@ namespace hsp.cs
             Program.ProgramField += "objsizeX = " + p[0] + ";\n" +
                                     "objsizeY = " + p[1] + ";\n" +
                                     "objSpace = " + p[2] + ";\n";
-            return "boxSize(" + p[0] + ", " + p[1] + ")";
+            return "//boxSize(" + p[0] + ", " + p[1] + ")";
+        }
+
+        public static string Dialog(string strings)
+        {
+            strings = Analyzer.StringUnEscape(strings);
+            var p = strings.Split(',');
+
+            for (var i = 0; i < p.Count(); i++)
+            {
+                p[i] = p[i].Trim();
+            }
+            switch(p[1])
+            {
+                case "0":
+                    Program.AddFunction[1] += "MessageBox.Show(" + p[0] + ", " + p[2] + ", " +
+                                              "MessageBoxButtons.OK, MessageBoxIcon.Information);\n";
+                    break;
+                case "1":
+                    Program.AddFunction[1] += "MessageBox.Show(" + p[0] + ", " + p[2] + ", " +
+                                              "MessageBoxButtons.OK, MessageBoxIcon.Warning);\n";
+                    break;
+                case "2":
+                    Program.AddFunction[1] += "MessageBox.Show(" + p[0] + ", " + p[2] + ", " +
+                                              "MessageBoxButtons.YesNo, MessageBoxIcon.Information);\n";
+                    break;
+                case "3":
+                    Program.AddFunction[1] += "MessageBox.Show(" + p[0] + ", " + p[2] + ", " +
+                                              "MessageBoxButtons.YesNo, MessageBoxIcon.Warning);\n";
+                    break;
+                case "16":
+                    break;
+                case "17":
+                    break;
+                case "32":
+                    break;
+                case "33":
+                    break;
+            }
+
+            return "//dialog(" + p[0] + ", " + p[2] + ")";
         }
 
         public static void Mousex(List<string> sentence, int i)
