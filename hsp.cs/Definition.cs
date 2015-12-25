@@ -174,8 +174,6 @@ namespace hsp.cs
             "form.MaximizeBox = false;\n" +
             "form.FormBorderStyle = FormBorderStyle.FixedSingle;\n" +
             "form.Paint += paint;\n" +
-            "form.KeyDown += keyDown;\n" +
-            "form.MouseDown += mouseDown;\n" +
             "form.FormClosed += formClosed;\n}\n\n",
 
             "public void paint(object sender, PaintEventArgs e)\n{\n" +
@@ -185,21 +183,10 @@ namespace hsp.cs
             "g = e.Graphics;\n" +
             "brush = new SolidBrush(Color.FromArgb(0, 0, 0));\n" +
             "pen = new Pen(Color.FromArgb(0, 0, 0));\n" +
-            "font = new Font(\"MS Pゴシック\", FontSize);\n",
+            "font = new Font(\"MS ゴシック\", FontSize);\n",
 
             "public void formClosed(object sender, FormClosedEventArgs e)\n{\n" +
             "form0.Dispose();\ng.Dispose();\npen.Dispose();\nbrush.Dispose();\nfont.Dispose();\n}\n\n"
-            ,
-                                           
-            "public void keyDown(object sender, KeyEventArgs e)\n{\n",
-
-            "public void mouseDown(object sender, MouseEventArgs e)\n{\n",
-
-        };
-        //AddFunctionのfooter
-        public static List<string> AddFunctionFooter = new List<string>()
-        {
-            "}\n\n", "}\n\n", "}\n\n"
         };
         //footer
         public const string ProgramFooter = "\n}\n";
