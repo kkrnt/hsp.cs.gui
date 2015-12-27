@@ -30,6 +30,12 @@ namespace hsp.cs
         public static string Print(string strings)
         {
             strings = Analyzer.StringUnEscape(strings);
+            if (strings == string.Empty)
+            {
+                Program.AddFunction[1] += "g.DrawString(\"\", font, brush, CurrentPosX, CurrentPosY);\n" +
+                                      "CurrentPosY += FontSize;\n";
+                return "//Print();";
+            }
             Program.AddFunction[1] += "g.DrawString(" + strings + ".ToString(), font, brush, CurrentPosX, CurrentPosY);\n" +
                                       "CurrentPosY += FontSize;\n";
             return "//Print(" + strings + ");";
