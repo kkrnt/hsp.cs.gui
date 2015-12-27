@@ -211,7 +211,9 @@ namespace hsp.cs
 
         private static List<string> ReturnLabelList = new List<string>(); 
 
-        public static List<Form> Window = new List<Form>(); 
+        public static List<Form> Window = new List<Form>();
+
+        public static List<int[]> errorLine = new List<int[]>();
 
         /// <summary>
         /// ローカル変数名を作成する関数
