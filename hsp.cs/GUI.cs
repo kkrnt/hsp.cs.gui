@@ -306,10 +306,6 @@ namespace hsp.cs
                     Program.VariableList.Add(p[0]);
                     Program.ProgramField += "public static dynamic " + p[0] + ";\n";
                 }
-                else
-                {
-                    //
-                }
             }
 
             if (p.Count() == 1)
@@ -458,11 +454,15 @@ namespace hsp.cs
             sentence[i] = "CurrentScreenID.Bottom";
         }
 
+        public static void Ginfo_sel(List<string> sentence, int i)
+        {
+            sentence[i] = "CurrentScreenID";
+        }
+
         public static void Hwnd(List<string> sentence, int i)
         {
             sentence[i] = "CurrentScreenID.Handle";
         }
-
 
         public static void __date__(List<string> sentence, int i)
         {

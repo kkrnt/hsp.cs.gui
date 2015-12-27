@@ -141,6 +141,7 @@ namespace hsp.cs
             "ginfo_wx2",
             "ginfo_wy1",
             "ginfo_wy2",
+            "ginfo_sel",
             "hwnd",
             "__date__",
             "__time__"

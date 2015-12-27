@@ -314,6 +314,9 @@ namespace hsp.cs
                         case "ginfo_wy2":
                             HSPGUI.Ginfo_wy2(sentence, i);
                             break;
+                        case "ginfo_sel":
+                            HSPGUI.Ginfo_sel(sentence, i);
+                            break;
                         case "hwnd":
                             HSPGUI.Hwnd(sentence, i);
                             break;
