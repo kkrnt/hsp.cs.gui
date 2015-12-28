@@ -230,7 +230,7 @@ namespace hsp.cs
                 {
                     switch (sentence[i])
                     {
-                        case "M_PI":
+                        case "m_pi":
                             HSP.M_pi(sentence, i);
                             break;
                         case "and":
@@ -329,9 +329,23 @@ namespace hsp.cs
                     }
                 }
             }
-
             //結果を反映
             return string.Join(" ", sentence);
         }
+
+        /*public static string ArrayVariable(string hspArrayString)
+        {
+            var sentence = hspArrayString.Replace("  ", " ").Split(' ').ToList();
+            for (var j = 0; j < sentence.Count; j++)
+            {
+                sentence[j] = sentence[j].Trim();
+                if (sentence[j] == null ||
+                    sentence[j].Equals("\n") ||
+                    sentence[j].Equals("") ||
+                    !Program.ArrayVariableList.Contains(sentence[j]) ||
+                    sentence[j + 1][0] != '(')
+                    continue;
+                sentence[j + 1][0] = '[';
+        }*/
     }
 }

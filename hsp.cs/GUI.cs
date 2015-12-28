@@ -32,13 +32,11 @@ namespace hsp.cs
             strings = Analyzer.StringUnEscape(strings);
             if (strings == string.Empty)
             {
-                Program.AddFunction[1] += "g.DrawString(\"\", font, brush, CurrentPosX, CurrentPosY);\n" +
-                                      "CurrentPosY += FontSize;\n";
-                return "//Print();";
+                return "g.DrawString(\"\", font, brush, CurrentPosX, CurrentPosY);\n" +
+                       "CurrentPosY += FontSize"; 
             }
-            Program.AddFunction[1] += "g.DrawString(" + strings + ".ToString(), font, brush, CurrentPosX, CurrentPosY);\n" +
-                                      "CurrentPosY += FontSize;\n";
-            return "//Print(" + strings + ");";
+            return "g.DrawString(" + strings + ".ToString(), font, brush, CurrentPosX, CurrentPosY);\n" +
+                   "CurrentPosY += FontSize";
         }
 
         public static string Pos(string strings)
@@ -52,19 +50,17 @@ namespace hsp.cs
 
             if (strings.Equals(string.Empty))
             {
-                Program.AddFunction[1] += "CurrentPosX = CurrentPosX;\n" +
-                                          "CurrentPosY = CurrentPosY;\n";
-                return "//SetCurrentPos(CurrentPosX, CurrentPosY);";
+               return "CurrentPosX = CurrentPosX" +
+                      "CurrentPosY = CurrentPosY";
             }
             else if (p.Count() == 2)
             {
-                Program.AddFunction[1] += "CurrentPosX = " + p[0] + ";\n" +
-                                          "CurrentPosY = " + p[1] + ";\n";
-                return "//SetCurrentPos(" + p[0] + ", " + p[1] + ");";
+                return "CurrentPosX = " + p[0] + ";\n" +
+                       "CurrentPosY = " + p[1];
             }
             else
             {
-                return "error";
+                return "Console.WriteLine(\"error\")";
             }
         }
 
@@ -72,9 +68,8 @@ namespace hsp.cs
         {
             Program.UsingCheck("using System.Threading");
 
-            Program.AddFunction[1] += "Thread.Sleep(" + strings + " * 10);\n" +
-                                      "Application.DoEvents();\n";
-            return "//wait " + strings + " * 10";
+            return "Thread.Sleep(" + strings + " * 10);\n" +
+                   "Application.DoEvents()";
         }
 
 
@@ -103,7 +98,7 @@ namespace hsp.cs
             if (!Program.AddFunction[0].Contains("public void Title"))
             {
                 Program.AddFunction[0] += "public void Title(Form form, string strings)\n{\n" +
-                                          "form.Text = strings;\n}\n";
+                                          "form.Text = strings;\n}\n\n";
 
             }
             
@@ -134,28 +129,26 @@ namespace hsp.cs
 
             if (p.Count() == 4)
             {
-                Program.AddFunction[1] += "g.FillEllipse(brush, " + p[0] + ", " + p[1] + ", " + 
-                                          p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ");\n";
+                return "g.FillEllipse(brush, " + p[0] + ", " + p[1] + ", " + 
+                       p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ")";
             }
             else if (p.Count() == 5)
             {
                 if (p[4].Equals("0"))
                 {
-                    Program.AddFunction[1] += "g.DrawEllipse(pen, " + p[0] + ", " + p[1] + ", " + 
-                                            p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ");\n";
+                    return "g.DrawEllipse(pen, " + p[0] + ", " + p[1] + ", " + 
+                           p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ")";
                 }
                 else
                 {
-                    Program.AddFunction[1] += "g.FillEllipse(brush, " + p[0] + ", " + p[1] + ", " + 
-                                              p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ");\n";
+                    return "g.FillEllipse(brush, " + p[0] + ", " + p[1] + ", " + 
+                           p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ")";
                 }
             }
             else
             {
-                //
+                return "Console.WriteLine(\"error\")";
             }
-
-            return "//Circle(" + p[0] + ", " + p[1] + ", " + p[2] + ", " + p[3] + ");";
         }
 
         public static string Boxf(string strings)
@@ -169,15 +162,13 @@ namespace hsp.cs
 
             if (p.Count() == 1)
             {
-                Program.AddFunction[1] += "g.FillRectangle(brush, 0, 0, " +
-                                          "CurrentScreenID.Width, " + "CurrentScreenID.Height);\n";
-                return "//Boxf(0, 0, CurrentScreenID.Width, " + "CurrentScreenID.Height);";
+                return "g.FillRectangle(brush, 0, 0, " +
+                       "CurrentScreenID.Width, " + "CurrentScreenID.Height)";
             }
             else if (p.Count() == 2)
             {
-                Program.AddFunction[1] += "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", " +
-                                          "CurrentScreenID.Width, " + "CurrentScreenID.Height);\n";
-                return "//Boxf(" + p[0] + ", " + p[1] + ", CurrentScreenID.Width, " + "CurrentScreenID.Height);";
+                return "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", " +
+                       "CurrentScreenID.Width, " + "CurrentScreenID.Height)";
             }
             else if (p.Count() == 4)
             {
@@ -211,13 +202,12 @@ namespace hsp.cs
                     p[3] = "CurrentScreenID.Height";
                 }
 
-                Program.AddFunction[1] += "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", " + 
-                                          p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ");\n";
-                return "//Boxf(" + p[0] + ", " + p[1] + ", " + p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ");";
+                return "g.FillRectangle(brush, " + p[0] + ", " + p[1] + ", " + 
+                       p[2] + " - " + p[0] + ", " + p[3] + " - " + p[1] + ")";
             }
             else
             {
-                return "error";
+                return "Console.WriteLine(\"error\")";
             }
         }
 
@@ -232,19 +222,17 @@ namespace hsp.cs
 
             if (p.Count() == 2)
             {
-                Program.AddFunction[1] += "g.DrawLine(pen, CurrentPosX, CurrentPosY, " + p[0] + ", " + p[1] + ");\n" +
-                                          "CurrentPosX = " + p[0] + ";\nCurrentPosY = " + p[1] + ";\n";
-                return "//Line(CurrentPosX, CurrentPosY, " + p[0] + ", " + p[1] + ");";
+                return "g.DrawLine(pen, CurrentPosX, CurrentPosY, " + p[0] + ", " + p[1] + ");\n" +
+                       "CurrentPosX = " + p[0] + ";\nCurrentPosY = " + p[1];
             }
             else if (p.Count() == 4)
             {
-                Program.AddFunction[1] += "g.DrawLine(pen, " + p[2] + ", " + p[3] + ", " + p[0] + ", " + p[1] + ");\n" +
-                                          "CurrentPosX = " + p[0] + ";\nCurrentPosY = " + p[1] + ";\n";
-                return "//Line(" + p[2] + ", " + p[3] + ", " + p[0] + ", " + p[1] + ");";
+                return "g.DrawLine(pen, " + p[2] + ", " + p[3] + ", " + p[0] + ", " + p[1] + ");\n" +
+                       "CurrentPosX = " + p[0] + ";\nCurrentPosY = " + p[1];
             }
             else
             {
-                return "error";
+                return "Console.WriteLine(\"error\")";
             }
         }
 
@@ -272,13 +260,12 @@ namespace hsp.cs
                     p[2] = "0";
                 }
 
-                Program.AddFunction[1] += "brush = new SolidBrush(Color.FromArgb(" + p[0] + ", " + p[1] + ", " + p[2] + "));\n" +
-                                          "pen = new Pen(Color.FromArgb(" + p[0] + ", " + p[1] + ", " + p[2] + "));\n";
-                return "//Color(" + p[0] + ", " + p[1] + ", " + p[2] + ");";
+                return "brush = new SolidBrush(Color.FromArgb(" + p[0] + ", " + p[1] + ", " + p[2] + "));\n" +
+                       "pen = new Pen(Color.FromArgb(" + p[0] + ", " + p[1] + ", " + p[2] + "))";
             }
             else
             {
-                return "error";
+                return "Console.WriteLine(\"error\")";
             }
         }
 
@@ -297,7 +284,7 @@ namespace hsp.cs
             {
                 p[i] = p[i].Trim();
             }
-
+            var str = "";
             //変数名として正しいか
             if (Program.VariableNameRule.Contains(p[0][0]))
             {
@@ -310,23 +297,21 @@ namespace hsp.cs
                 {
                     //変数リストに追加
                     Program.VariableList.Add(p[0]);
-                    Program.ProgramField += "public static dynamic " + p[0] + ";\n";
+                    str = "dynamic ";
                 }
             }
 
             if (p.Count() == 1)
             {
-                Program.AddFunction[1] += p[0] + " = GetAsyncKeyState(1) >> 15;\n";
-                return "//getkey()";
+                return str + p[0] + " = GetAsyncKeyState(1) >> 15";
             }
             else if (p.Count() == 2)
             {
-                Program.AddFunction[1] += p[0] + " = GetAsyncKeyState(" + p[1] + ") >> 15;\n";
-                return "//getkey()";
+                return str + p[0] + " = GetAsyncKeyState(" + p[1] + ") >> 15";
             }
             else
             {
-                return "error";
+                return "Console.WriteLine(\"error\")";
             }
         }
 
@@ -341,7 +326,7 @@ namespace hsp.cs
 
             Program.ProgramField += "objsizeX = " + p[0] + ";\n" +
                                     "objsizeY = " + p[1] + ";\n" +
-                                    "objSpace = " + p[2] + ";\n";
+                                    "objSpace = " + p[2];
             return "//boxSize(" + p[0] + ", " + p[1] + ")";
         }
 
@@ -356,39 +341,34 @@ namespace hsp.cs
             }
             if (p.Count() == 1)
             {
-                Program.AddFunction[1] += "MessageBox.Show(" + p[0] + ", \"\", " +
-                                              "MessageBoxButtons.OK, MessageBoxIcon.Information);\n";
-                return "//dialog(" + p[0] + ")";
+                return "MessageBox.Show(" + p[0] + ", \"\", " +
+                       "MessageBoxButtons.OK, MessageBoxIcon.Information)";
             }
             switch(p[1])
             {
                 case "0":
-                    Program.AddFunction[1] += "MessageBox.Show(" + p[0] + ", " + p[2] + ", " +
-                                              "MessageBoxButtons.OK, MessageBoxIcon.Information);\n";
-                    break;
+                    return "MessageBox.Show(" + p[0] + ", " + p[2] + ", " +
+                           "MessageBoxButtons.OK, MessageBoxIcon.Information)";
                 case "1":
-                    Program.AddFunction[1] += "MessageBox.Show(" + p[0] + ", " + p[2] + ", " +
-                                              "MessageBoxButtons.OK, MessageBoxIcon.Warning);\n";
-                    break;
+                    return "MessageBox.Show(" + p[0] + ", " + p[2] + ", " +
+                           "MessageBoxButtons.OK, MessageBoxIcon.Warning);\n";
                 case "2":
-                    Program.AddFunction[1] += "MessageBox.Show(" + p[0] + ", " + p[2] + ", " +
-                                              "MessageBoxButtons.YesNo, MessageBoxIcon.Information);\n";
-                    break;
+                    return "MessageBox.Show(" + p[0] + ", " + p[2] + ", " +
+                           "MessageBoxButtons.YesNo, MessageBoxIcon.Information)";
                 case "3":
-                    Program.AddFunction[1] += "MessageBox.Show(" + p[0] + ", " + p[2] + ", " +
-                                              "MessageBoxButtons.YesNo, MessageBoxIcon.Warning);\n";
-                    break;
+                    return "MessageBox.Show(" + p[0] + ", " + p[2] + ", " +
+                           "MessageBoxButtons.YesNo, MessageBoxIcon.Warning)";
                 case "16":
-                    break;
+                    return "";
                 case "17":
-                    break;
+                    return "";
                 case "32":
-                    break;
+                    return "";
                 case "33":
-                    break;
+                    return "";
+                default:
+                    return "Console.WriteLine(\"error\")";
             }
-
-            return "//dialog(" + p[0] + ", " + p[2] + ")";
         }
 
         public static void Mousex(List<string> sentence, int i)

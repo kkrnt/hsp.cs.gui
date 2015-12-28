@@ -33,7 +33,7 @@ namespace hsp.cs
         /// <returns></returns>
         public static string Print(string strings)
         {
-            return "Console.WriteLine(" + strings + ");";
+            return "Console.WriteLine(" + strings + ")";
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace hsp.cs
             {
                 Console.WriteLine("エラー12(「ファイルが見つからないか無効な名前です」)");
             }
-            return "File.Delete(\"" + filename + "\");";
+            return "File.Delete(\"" + filename + "\")";
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace hsp.cs
                 p[i] = p[i].Trim();
             }
 
-            return "File.Copy(" + p[0] + "," + p[1] + ");";
+            return "File.Copy(" + p[0] + "," + p[1] + ")";
         }
 
         /// <summary>
@@ -100,13 +100,13 @@ namespace hsp.cs
         {
             Program.UsingCheck("using System.IO");
 
-            return "Directory.CreateDirectory(" + dirname + ");";
+            return "Directory.CreateDirectory(" + dirname + ")";
         }
 
 
         public static string Chdir(string dirname)
         {
-            return "Environment.CurrentDirectory = " + dirname + ";";
+            return "Environment.CurrentDirectory = " + dirname;
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace hsp.cs
             }
             if (p.Count() == 2)
             {
-                return "stat = " + p[0] + ".split(\'" + p[1] + "\').Length;";
+                return "stat = " + p[0] + ".split(\'" + p[1] + "\').Length";
             }
             else if (p.Count() == 3)
             {
@@ -173,28 +173,29 @@ namespace hsp.cs
                 p[i] = p[i].Trim();
             }
 
+            var str = "";
             //変数リストに含まれていない場合
             if (!Program.ArrayVariableList.Contains(p[0]))
             {
                 //変数リストに追加
                 Program.ArrayVariableList.Add(p[0]);
-                p[0] = "dynamic " + p[0];
+                str = "dynamic ";
             }
 
             switch (p.Count())
             {
                 case 1:
-                    return p[0] + " = new dynamic [1];\n";
+                    return str + p[0] + " = new dynamic [1]";
                 case 2:
-                    return p[0] + " = new dynamic [" + p[1] + "];\n";
+                    return str + p[0] + " = new dynamic [" + p[1] + "]";
                 case 3:
-                    return p[0] + " = new dynamic [" + p[1] + "," + p[2] + "];\n";
+                    return str + p[0] + " = new dynamic [" + p[1] + "," + p[2] + "]";
                 case 4:
-                    return p[0] + " = new dynamic [" + p[1] + "," + p[2] + "," + p[2] + "];\n";
+                    return str + p[0] + " = new dynamic [" + p[1] + "," + p[2] + "," + p[2] + "]";
                 case 5:
-                    return p[0] + " = new dynamic [" + p[1] + "," + p[2] + "," + p[3] + "," + p[4] + "];\n";
+                    return str + p[0] + " = new dynamic [" + p[1] + "," + p[2] + "," + p[3] + "," + p[4] + "]";
                 default:
-                    return "Console.WriteLine(\"エラー16(「パラメータの数が多すぎます」)\");\n";
+                    return "Console.WriteLine(\"エラー16(「パラメータの数が多すぎます」)\")";
             }
         }
 
@@ -224,17 +225,17 @@ namespace hsp.cs
             switch (p.Count())
             {
                 case 1:
-                    return str + p[0] + " = new double [1];\n";
+                    return str + p[0] + " = new double [1]";
                 case 2:
-                    return str + p[0] + " = new double [" + p[1] + "];\n";
+                    return str + p[0] + " = new double [" + p[1] + "]";
                 case 3:
-                    return str + p[0] + " = new double [" + p[1] + "," + p[2] + "];\n";
+                    return str + p[0] + " = new double [" + p[1] + "," + p[2] + "]";
                 case 4:
-                    return str + p[0] + " = new double [" + p[1] + "," + p[2] + "," + p[2] + "];\n";
+                    return str + p[0] + " = new double [" + p[1] + "," + p[2] + "," + p[2] + "]";
                 case 5:
-                    return str + p[0] + " = new double [" + p[1] + "," + p[2] + "," + p[3] + "," + p[4] + "];\n";
+                    return str + p[0] + " = new double [" + p[1] + "," + p[2] + "," + p[3] + "," + p[4] + "]";
                 default:
-                    return "Console.WriteLine(\"エラー16(「パラメータの数が多すぎます」)\");\n";
+                    return "Console.WriteLine(\"エラー16(「パラメータの数が多すぎます」)\")";
             }
         }
 
@@ -247,11 +248,11 @@ namespace hsp.cs
         {
             if (p1.Equals(""))
             {
-                return "return;\n";
+                return "Application.Exit();";
             }
             else
             {
-                return "return " /*+p1*/ + ";\n";
+                return "return " /*+p1*/;
             }
         }
 
@@ -280,7 +281,7 @@ namespace hsp.cs
         /// <param name="j"></param>
         public static void Int(List<string> sentence, int j)
         {
-            sentence[j] = "int.Parse";
+            sentence[j] = "(int)";
         }
 
         /// <summary>
@@ -290,7 +291,7 @@ namespace hsp.cs
         /// <param name="j"></param>
         public static void Double(List<string> sentence, int j)
         {
-            sentence[j] = "double.Parse";
+            sentence[j] = "(double)";
         }
 
         /// <summary>
@@ -731,7 +732,7 @@ namespace hsp.cs
 
         public static void Rnd(List<string> sentence, int j, int k)
         {
-            sentence[j] = "Random random = new Random();\n" + "random.Next(" + sentence[j + 2] + ");";
+            sentence[j] = "Random random = new Random();\n" + "random.Next(" + sentence[j + 2] + ")";
 
             for (var i = j + 1; i <= k; i++)
             {

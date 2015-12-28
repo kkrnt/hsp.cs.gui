@@ -113,7 +113,7 @@ namespace hsp.cs
         //マクロリスト
         public static List<string> MacroList = new List<string>()
         {
-            "M_PI",
+            "m_pi",
             "and",
             "not",
             "or",
@@ -153,12 +153,12 @@ namespace hsp.cs
         private const string ProgramHeader = "public class Program\n{\n";
         //field
         public static string ProgramField = "public static Form form0 = new Form();\n" +
-                                            "public static Form CurrentScreenID = form0;\n";
+                                            "public static Form CurrentScreenID = form0;\n" +
+                                            "public static Program program = new Program();\n";
         //Main関数以外の関数の定義
         public static string SubFunction = "";
         //Main関数の定義
         private const string MainFunction = "public static void Main()\n{\n" +
-                                            "Program program = new Program();\n" +
                                             "program.initScreen(form0);\n";
         //システム変数宣言
         public static string VariableDefinition = "";
@@ -182,7 +182,8 @@ namespace hsp.cs
             "Graphics g = e.Graphics;\n" +
             "Brush brush = new SolidBrush(Color.FromArgb(0, 0, 0));\n" +
             "Pen pen = new Pen(Color.FromArgb(0, 0, 0));\n" +
-            "Font font = new Font(\"MS ゴシック\", FontSize);\n"
+            "Font font = new Font(\"MS ゴシック\", FontSize);\n" +
+            "try\n{\n"
         };
         //footer
         public const string ProgramFooter = "\n}\n";

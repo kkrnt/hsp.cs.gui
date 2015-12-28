@@ -147,11 +147,7 @@ namespace hsp.cs
                 //ラベルの定義
                 if (hspArrayData[i][0] == '*')
                 {
-                    hspArrayData[i] = hspArrayData[i].Substring(1);
-                    AddFunction[1] += "try\n{\n" + hspArrayData[i].Trim();
-                    AddFunction[1] += ":\n"; 
-                    hspArrayData[i] = "//" + hspArrayData[i].Trim();
-                    hspArrayData[i] += ":";
+                    hspArrayData[i] = hspArrayData[i].Substring(1).Trim() + ":";
                 }
 
                 //１番最初のsentenceを抜き出す
@@ -159,6 +155,9 @@ namespace hsp.cs
                 var firstSentence = spaceIndex < 0
                     ? hspArrayData[i].Trim()
                     : hspArrayData[i].Substring(0, spaceIndex).Trim();
+
+                //配列処理
+                //hspArrayData[i] = Analyzer.ArrayVariable(hspArrayData[i]);
 
                 //マクロ処理
                 hspArrayData[i] = Analyzer.Macro(hspArrayData[i]);
@@ -389,8 +388,7 @@ namespace hsp.cs
 
                         //gotoの処理
                         case "goto":
-                            AddFunction[1] += hspArrayData[i].Replace("*", "") + ";\n}\ncatch(Exception)\n{\n}\n";
-                            hspArrayData[i] = "//" + hspArrayData[i].Replace("*", "");
+                            hspArrayData[i] = hspArrayData[i].Replace("*", "");
                             break;
 
                         case "gosub":
@@ -500,7 +498,8 @@ namespace hsp.cs
                 }
 
                 //基本文法でもコマンドでもないものは変数
-                else if (!BasicList.Contains(firstSentence) && !FunctionList.Contains(firstSentence))
+                else if (!BasicList.Contains(firstSentence) && !FunctionList.Contains(firstSentence) &&
+                         hspArrayData[i][hspArrayData[i].Length - 1] != ':')
                 {
                     //変数名として正しいか
                     if (VariableNameRule.Contains(firstSentence[0]))
@@ -510,18 +509,16 @@ namespace hsp.cs
                     else
                     {
                         //変数リストに含まれていない場合
-                        if (!VariableList.Contains(firstSentence) && hspArrayData[i][hspArrayData[i].Length - 1] != ':')
+                        if (!VariableList.Contains(firstSentence) && !ArrayVariableList.Contains(firstSentence))
                         {
                             //変数宣言
-                            ProgramField += "public static dynamic " + hspArrayData[i] + ";\n";
-                            hspArrayData[i] = "//dynamic " + hspArrayData[i];
+                            hspArrayData[i] = "dynamic " + hspArrayData[i];
                             //変数リストに追加
                             VariableList.Add(firstSentence);
                         }
                         else
                         {
-                            AddFunction[1] += hspArrayData[i] + ";\n";
-                            hspArrayData[i] = "//" + hspArrayData[i];
+
                         }
                     }
                 }
@@ -568,8 +565,8 @@ namespace hsp.cs
 
             //C#のコードを完成
             var code = Using + ProgramHeader + ProgramField + SubFunction + MainFunction + VariableDefinition +
-                       string.Join("\n", hspArrayData) + "\n" + AddMainFunction + "}\n\n" + AddFunction[0] +
-                       AddFunction[1] + "}\n\n" + ProgramFooter;
+                       AddMainFunction + "}\n\n" + AddFunction[0] + AddFunction[1] + string.Join("\n", hspArrayData) +
+                       "\n}\ncatch(Exception)\n{\n}\n" + "\n}\n\n" + ProgramFooter;
 
             //エラー判定
             var error = true;
