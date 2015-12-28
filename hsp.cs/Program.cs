@@ -63,7 +63,7 @@ namespace hsp.cs
             //hspファイルを読み込み
             var sr = new StreamReader(hspFileName, Encoding.UTF8);
             //全て小文字にして全角スペースとタブを半角スペースに変換し, 改行でスプリット
-            var hspArrayData = sr.ReadToEnd().Split('\n').Where(i => i.Length != 0).ToList();
+            var hspArrayData = sr.ReadToEnd().ToLower().Split('\n').Where(i => i.Length != 0).ToList();
             sr.Close();
 
             //デバッグ用の出力
@@ -230,7 +230,9 @@ namespace hsp.cs
                                 .Replace("+==", " += ")
                                 .Replace("-==", " -= ")
                                 .Replace("*==", " *= ")
-                                .Replace("/==", " /= ");
+                                .Replace("/==", " /= ")
+                                .Replace("<==", " <= ")
+                                .Replace(">==", " >= ");
 
                             break;
 
@@ -567,7 +569,7 @@ namespace hsp.cs
             //C#のコードを完成
             var code = Using + ProgramHeader + ProgramField + SubFunction + MainFunction + VariableDefinition +
                        string.Join("\n", hspArrayData) + "\n" + AddMainFunction + "}\n\n" + AddFunction[0] +
-                       AddFunction[1] + "}\n\n" + AddFunction[2] + ProgramFooter;
+                       AddFunction[1] + "}\n\n" + ProgramFooter;
 
             //エラー判定
             var error = true;

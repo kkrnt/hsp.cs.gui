@@ -128,8 +128,8 @@ namespace hsp.cs
             "dir_win",
             "ginfo_mx",
             "ginfo_my",
-            "ginfo_sizeX",
-            "ginfo_sizeY",
+            "ginfo_sizex",
+            "ginfo_sizey",
             "ginfo_r",
             "ginfo_g",
             "ginfo_b",
@@ -148,13 +148,12 @@ namespace hsp.cs
         };
 
         //using
-        public static string Using = "using System;\nusing System.Drawing;\nusing System.Windows.Forms;\nusing System.Threading;\n";
+        public static string Using = "using System;\nusing System.Drawing;\nusing System.Windows.Forms;\n";
         //header
         private const string ProgramHeader = "public class Program\n{\n";
         //field
         public static string ProgramField = "public static Form form0 = new Form();\n" +
-                                            "public static Form CurrentScreenID = form0;\n" +
-                                            "Graphics g;\nPen pen;\nBrush brush;\nFont font;\n";
+                                            "public static Form CurrentScreenID = form0;\n";
         //Main関数以外の関数の定義
         public static string SubFunction = "";
         //Main関数の定義
@@ -174,20 +173,16 @@ namespace hsp.cs
             "form.BackColor = Color.FromArgb(255, 255, 255);\n" +
             "form.MaximizeBox = false;\n" +
             "form.FormBorderStyle = FormBorderStyle.FixedSingle;\n" +
-            "form.Paint += paint;\n" +
-            "form.FormClosed += formClosed;\n}\n\n",
+            "form.Paint += paint;\n}\n\n",
 
             "public void paint(object sender, PaintEventArgs e)\n{\n" +
             "var FontSize = 14;\n"+
             "var CurrentPosX = 0;\n" +
             "var CurrentPosY = 0;\n" +
-            "g = e.Graphics;\n" +
-            "brush = new SolidBrush(Color.FromArgb(0, 0, 0));\n" +
-            "pen = new Pen(Color.FromArgb(0, 0, 0));\n" +
-            "font = new Font(\"MS ゴシック\", FontSize);\n",
-
-            "public void formClosed(object sender, FormClosedEventArgs e)\n{\n" +
-            "form0.Dispose();\ng.Dispose();\npen.Dispose();\nbrush.Dispose();\nfont.Dispose();\n}\n\n"
+            "Graphics g = e.Graphics;\n" +
+            "Brush brush = new SolidBrush(Color.FromArgb(0, 0, 0));\n" +
+            "Pen pen = new Pen(Color.FromArgb(0, 0, 0));\n" +
+            "Font font = new Font(\"MS ゴシック\", FontSize);\n"
         };
         //footer
         public const string ProgramFooter = "\n}\n";

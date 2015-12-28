@@ -354,6 +354,12 @@ namespace hsp.cs
             {
                 p[i] = p[i].Trim();
             }
+            if (p.Count() == 1)
+            {
+                Program.AddFunction[1] += "MessageBox.Show(" + p[0] + ", \"\", " +
+                                              "MessageBoxButtons.OK, MessageBoxIcon.Information);\n";
+                return "//dialog(" + p[0] + ")";
+            }
             switch(p[1])
             {
                 case "0":
