@@ -333,19 +333,37 @@ namespace hsp.cs
             return string.Join(" ", sentence);
         }
 
-        /*public static string ArrayVariable(string hspArrayString)
+        public static string ArrayVariable(string hspArrayString)
         {
-            var sentence = hspArrayString.Replace("  ", " ").Split(' ').ToList();
+            hspArrayString = hspArrayString.Replace("  ", " ");
+            var sentence = hspArrayString.Split(' ').ToList();
             for (var j = 0; j < sentence.Count; j++)
             {
                 sentence[j] = sentence[j].Trim();
-                if (sentence[j] == null ||
-                    sentence[j].Equals("\n") ||
-                    sentence[j].Equals("") ||
-                    !Program.ArrayVariableList.Contains(sentence[j]) ||
+                if (!Program.ArrayVariableList.Contains(sentence[j]) ||
                     sentence[j + 1][0] != '(')
                     continue;
-                sentence[j + 1][0] = '[';
-        }*/
+
+                sentence[j + 1] = "[";
+                var bracketStartCount = 1;
+                for (var k = j + 2; k < sentence.Count; k++)
+                {
+                    if (sentence[k].Equals("("))
+                    {
+                        bracketStartCount++;
+                    }
+                    if (sentence[k].Equals(")"))
+                    {
+                        bracketStartCount--;
+                    }
+                    if (bracketStartCount == 0)
+                    {
+                        sentence[k] = "]";
+                        break;
+                    }
+                }
+            }
+            return string.Join(" ", sentence);
+        }
     }
 }
